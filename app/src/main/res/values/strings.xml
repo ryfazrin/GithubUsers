@@ -43,6 +43,19 @@
         <item>Jakarta Indonesia</item>
     </string-array>
 
+    <integer-array name="avatar">
+        <item>@drawable/user1</item>
+        <item>@drawable/user2</item>
+        <item>@drawable/user3</item>
+        <item>@drawable/user4</item>
+        <item>@drawable/user5</item>
+        <item>@drawable/user6</item>
+        <item>@drawable/user7</item>
+        <item>@drawable/user8</item>
+        <item>@drawable/user9</item>
+        <item>@drawable/user10</item>
+    </integer-array>
+
     <string-array name="repository">
         <item>102</item>
         <item>37</item>
@@ -94,17 +107,4 @@
         <item>61</item>
         <item>10</item>
     </string-array>
-
-    <integer-array name="avatar">
-        <item>@drawable/user1</item>
-        <item>@drawable/user2</item>
-        <item>@drawable/user3</item>
-        <item>@drawable/user4</item>
-        <item>@drawable/user5</item>
-        <item>@drawable/user6</item>
-        <item>@drawable/user7</item>
-        <item>@drawable/user8</item>
-        <item>@drawable/user9</item>
-        <item>@drawable/user10</item>
-    </integer-array>
 </resources>
