@@ -110,8 +110,9 @@
 
                 <TextView
                     android:id="@+id/tv_detail_company"
-                    android:layout_width="wrap_content"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
+                    android:textAlignment="textEnd"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:text="Company"
