@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--  color Source : https://coolors.co/038c99-199da1-cefbfa-a82c2c-de0d0d-ffd4d4-000000-ffffff  -->
     <color name="metallic_seaweed">#038C99</color>
     <color name="viridian_green">#199DA1</color>
     <color name="light_cyan">#CEFBFA</color>
