@@ -32,8 +32,7 @@ class DetailUserActivity : AppCompatActivity() {
         val tvRepository: TextView = findViewById(R.id.tv_detail_repository)
 
         user = intent.getParcelableExtra<User>(EXTRA_USER) as User
-
-        //set back button
+        
         supportActionBar?.title = user.username
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
