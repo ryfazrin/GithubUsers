@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 
 class ListUserAdapter(private val listUser: ArrayList<User>) : RecyclerView.Adapter<ListUserAdapter.ListViewHolder>() {
 
@@ -17,7 +19,7 @@ class ListUserAdapter(private val listUser: ArrayList<User>) : RecyclerView.Adap
     }
 
     class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var imagePhoto: ImageView = itemView.findViewById(R.id.img_item_photo)
+        var imgPhoto: ImageView = itemView.findViewById(R.id.img_item_photo)
         var tvName: TextView = itemView.findViewById(R.id.tv_item_name)
         var tvUsername: TextView = itemView.findViewById(R.id.tv_item_username)
         var tvLocation: TextView = itemView.findViewById(R.id.tv_item_location)
@@ -30,7 +32,10 @@ class ListUserAdapter(private val listUser: ArrayList<User>) : RecyclerView.Adap
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val (name, username, location, avatar) = listUser[position]
-        holder.imagePhoto.setImageResource(avatar)
+        Glide.with(holder.itemView.context)
+            .load(avatar)
+            .circleCrop()
+            .into(holder.imgPhoto)
         holder.tvName.text = name
         holder.tvUsername.text = username
         holder.tvLocation.text = location
