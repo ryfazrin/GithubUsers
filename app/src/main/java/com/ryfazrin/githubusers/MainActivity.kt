@@ -29,6 +29,9 @@ class MainActivity : AppCompatActivity() {
             val dataLocation = resources.getStringArray(R.array.location)
             val dataAvatar = resources.obtainTypedArray(R.array.avatar)
             val dataRepository = resources.getStringArray(R.array.repository)
+            val dataCompany = resources.getStringArray(R.array.company)
+            val dataFollowers = resources.getStringArray(R.array.followers)
+            val dataFollowing = resources.getStringArray(R.array.following)
 
             val listUser = ArrayList<User>()
             for (i in dataName.indices) {
@@ -37,7 +40,11 @@ class MainActivity : AppCompatActivity() {
                     username = dataUsername[i],
                     location = dataLocation[i],
                     avatar = dataAvatar.getResourceId(i, -1),
-                    repository = dataRepository[i])
+                    repository = dataRepository[i],
+                    company = dataCompany[i],
+                    followers = dataFollowers[i],
+                    following = dataFollowing[i]
+                )
                 listUser.add(user)
             }
             return listUser
