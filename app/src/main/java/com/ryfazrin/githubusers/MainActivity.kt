@@ -1,5 +1,6 @@
 package com.ryfazrin.githubusers
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,17 +28,36 @@ class MainActivity : AppCompatActivity() {
             val dataUsername = resources.getStringArray(R.array.username)
             val dataLocation = resources.getStringArray(R.array.location)
             val dataAvatar = resources.obtainTypedArray(R.array.avatar)
+            val dataRepository = resources.getStringArray(R.array.repository)
+
             val listUser = ArrayList<User>()
             for (i in dataName.indices) {
-                val user = User(dataName[i], dataUsername[i], dataLocation[i], dataAvatar.getResourceId(i, -1))
+                val user = User(
+                    name = dataName[i],
+                    username = dataUsername[i],
+                    location = dataLocation[i],
+                    avatar = dataAvatar.getResourceId(i, -1),
+                    repository = dataRepository[i])
                 listUser.add(user)
             }
             return listUser
         }
 
-    private fun showRecyclerList(){
+    private fun showRecyclerList() {
         rvUser.layoutManager = LinearLayoutManager(this)
         val listUserAdapter = ListUserAdapter(list)
         rvUser.adapter = listUserAdapter
+
+        listUserAdapter.setOnItemClickCallback(object : ListUserAdapter.OnItemCLickCallback {
+            override fun onItemClicked(data: User) {
+                showSelectedUser(data)
+            }
+        })
+    }
+
+    private fun showSelectedUser(user: User) {
+        val moveDetailIntent = Intent(this@MainActivity, DetailUserActivity::class.java)
+        moveDetailIntent.putExtra(DetailUserActivity.EXTRA_USER, user)
+        startActivity(moveDetailIntent)
     }
 }
