@@ -32,7 +32,7 @@ class DetailUserActivity : AppCompatActivity() {
         val tvRepository: TextView = findViewById(R.id.tv_detail_repository)
 
         user = intent.getParcelableExtra<User>(EXTRA_USER) as User
-        
+
         supportActionBar?.title = user.username
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -60,7 +60,7 @@ class DetailUserActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.share -> {
-                val sendData = "Github User's\n\nNama: ${user.username}\n\nUsername: ${user.username}\n\nCompany: ${user.company}"
+                val sendData = "Github User's\n\nName: ${user.name}\n\nUsername: ${user.username}\n\nCompany: ${user.company}"
 
                 val intent = Intent()
                 intent.action = Intent.ACTION_SEND
