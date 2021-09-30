@@ -22,6 +22,7 @@ class DetailUserActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_user)
 
+
         val imgUser: ImageView = findViewById(R.id.img_detail_user)
         val tvName: TextView = findViewById(R.id.tv_detail_name)
         val tvFollowers: TextView = findViewById(R.id.tv_detail_followers)
@@ -32,7 +33,9 @@ class DetailUserActivity : AppCompatActivity() {
 
         user = intent.getParcelableExtra<User>(EXTRA_USER) as User
 
+        //set back button
         supportActionBar?.title = user.username
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         Glide.with(this)
             .load(user.avatar)
@@ -45,6 +48,11 @@ class DetailUserActivity : AppCompatActivity() {
         tvRepository.text = user.repository
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_detail, menu)
         return super.onCreateOptionsMenu(menu)
@@ -53,19 +61,19 @@ class DetailUserActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.share -> {
-                val sendData = "Github User's\n\nNama: ${user.name}\n\nUsername: ${user.username}\n\nCompany: ${user.company}"
+                val sendData = "Github User's\n\nNama: ${user.username}\n\nUsername: ${user.username}\n\nCompany: ${user.company}"
 
                 val intent = Intent()
                 intent.action = Intent.ACTION_SEND
                 intent.putExtra(Intent.EXTRA_TEXT, sendData)
                 intent.type="text/plain"
-                startActivity(Intent.createChooser(intent,"Bagikan Ke:"))
+                startActivity(Intent.createChooser(intent,"Share ${user.username} Github Profile :"))
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
-    fun countViews(count:Long): String{
+    private fun countViews(count:Long): String{
         val array = arrayOf(' ', 'k', 'M', 'B', 'T', 'P', 'E')
         val value = Math.floor(Math.log10(count.toDouble())).toInt()
         val base = value / 3
