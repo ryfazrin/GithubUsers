@@ -3,6 +3,7 @@
     <string name="github_name">Github Name</string>
     <string name="github_username">Github username</string>
     <string name="user_location">User Location</string>
+    <string name="share">share</string>
 
     <string-array name="username">
         <item>JakeWharton</item>
