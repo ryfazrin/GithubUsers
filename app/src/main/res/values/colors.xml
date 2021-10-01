@@ -2,10 +2,8 @@
 <resources>
     <color name="metallic_seaweed">#038C99</color>
     <color name="viridian_green">#199DA1</color>
-    <color name="light_cyan">#CEFBFA</color>
     <color name="auburn">#A82C2C</color>
     <color name="rosso_corsa">#DE0D0D</color>
     <color name="pale_pink">#FFD4D4</color>
     <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
 </resources>
