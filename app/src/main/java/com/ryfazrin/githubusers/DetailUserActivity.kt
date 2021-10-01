@@ -72,10 +72,10 @@ class DetailUserActivity : AppCompatActivity() {
         val array = arrayOf(' ', 'k', 'M', 'B', 'T', 'P', 'E')
         val value = Math.floor(Math.log10(count.toDouble())).toInt()
         val base = value / 3
-        if (value >= 3 && base < array.size) {
-            return DecimalFormat("#0.0").format(count/ Math.pow(10.0, (base * 3).toDouble())) + array[base]
+        return if (value >= 3 && base < array.size) {
+            DecimalFormat("#0.0").format(count/ Math.pow(10.0, (base * 3).toDouble())) + array[base]
         } else {
-            return DecimalFormat("#,##0").format(count)
+            DecimalFormat("#,##0").format(count)
         }
     }
 
