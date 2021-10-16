@@ -14,18 +14,18 @@
 
     <ImageView
         android:id="@+id/img_item_photo"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/tv_item_name"
+        android:id="@+id/tv_item_username"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:textSize="16sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/img_item_photo"
@@ -33,22 +33,12 @@
         tools:text="@string/github_name" />
 
     <TextView
-        android:id="@+id/tv_item_username"
+        android:id="@+id/tv_item_type"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         tools:text="@string/github_username"
         android:textColor="@color/metallic_seaweed"
-        app:layout_constraintEnd_toEndOf="@+id/tv_item_name"
-        app:layout_constraintStart_toStartOf="@+id/tv_item_name"
-        app:layout_constraintTop_toBottomOf="@+id/tv_item_name" />
-
-    <TextView
-        android:id="@+id/tv_item_location"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        tools:text="@string/user_location"
         app:layout_constraintEnd_toEndOf="@+id/tv_item_username"
         app:layout_constraintStart_toStartOf="@+id/tv_item_username"
         app:layout_constraintTop_toBottomOf="@+id/tv_item_username" />
