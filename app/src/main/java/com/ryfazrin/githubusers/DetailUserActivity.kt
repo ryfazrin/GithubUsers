@@ -3,13 +3,18 @@ package com.ryfazrin.githubusers
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.ryfazrin.githubusers.databinding.ActivityDetailUserBinding
+import retrofit2.Call
 import java.text.DecimalFormat
+import retrofit2.Callback
+import retrofit2.Response
 
 class DetailUserActivity : AppCompatActivity() {
 
@@ -34,15 +39,51 @@ class DetailUserActivity : AppCompatActivity() {
         supportActionBar?.title = user.login
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        Glide.with(this)
-            .load(user.avatarUrl)
-            .into(binding.imgDetailUser)
 //        tvName.text = user.name
 //        tvFollowers.text = countViews(user.followers.toLong())
 //        tvFollowing.text = countViews(user.following.toLong())
 //        tvLocation.text = user.location
 //        tvCompany.text = user.company
 //        tvRepository.text = user.repository
+
+        findUser()
+    }
+
+    private fun findUser() {
+        showLoading(true)
+        val client = ApiConfig.getApiService().getDetailUser(user.login)
+        client.enqueue(object : Callback<UserDetailResponse> {
+            override fun onResponse(
+                call: Call<UserDetailResponse>,
+                response: Response<UserDetailResponse>
+            ) {
+                showLoading(false)
+                if (response.isSuccessful) {
+                    val responseBody = response.body()
+                    if (responseBody != null) {
+                        setUserData(responseBody)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<UserDetailResponse>, t: Throwable) {
+                showLoading(false)
+                Log.e(TAG, "onFailure: ${t.message}")
+            }
+
+        })
+    }
+
+    private fun setUserData(user: UserDetailResponse) {
+        Glide.with(this)
+            .load(user.avatarUrl)
+            .into(binding.imgDetailUser)
+        binding.tvDetailName.text = user.name
+        binding.tvDetailFollowers.text = user.followers.toString()
+        binding.tvDetailFollowing.text = user.following.toString()
+        binding.tvDetailLocation.text = user.location
+        binding.tvDetailCompany.text = user.company
+        binding.tvDetailRepository.text = user.publicRepos.toString()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -70,7 +111,7 @@ class DetailUserActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun countViews(count:Long): String{
+    private fun countViews(count: Long): String{
         val array = arrayOf(' ', 'k', 'M', 'B', 'T', 'P', 'E')
         val value = Math.floor(Math.log10(count.toDouble())).toInt()
         val base = value / 3
@@ -81,7 +122,16 @@ class DetailUserActivity : AppCompatActivity() {
         }
     }
 
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading) {
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.visibility = View.GONE
+        }
+    }
+
     companion object {
+        private const val TAG = "DetailUserActivity"
         const val EXTRA_USER = "extra_user"
     }
 }
