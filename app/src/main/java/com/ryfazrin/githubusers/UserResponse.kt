@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class UserResponse(
+data class UserDetailResponse(
 
 //	@field:SerializedName("gists_url")
 //	val gistsUrl: String,
@@ -42,16 +42,16 @@ data class UserResponse(
 //
 //	@field:SerializedName("site_admin")
 //	val siteAdmin: Boolean,
-//
-//	@field:SerializedName("company")
-//	val company: String,
-//
+
+	@field:SerializedName("company")
+	val company: String,
+
 //	@field:SerializedName("id")
 //	val id: Int,
-//
-//	@field:SerializedName("public_repos")
-//	val publicRepos: Int,
-//
+
+	@field:SerializedName("public_repos")
+	val publicRepos: Int,
+
 //	@field:SerializedName("gravatar_id")
 //	val gravatarId: String,
 //
@@ -79,11 +79,11 @@ data class UserResponse(
 //	@field:SerializedName("received_events_url")
 //	val receivedEventsUrl: String,
 //
-//	@field:SerializedName("followers")
-//	val followers: Int,
-//
-//	@field:SerializedName("avatar_url")
-//	val avatarUrl: String,
+	@field:SerializedName("followers")
+	val followers: Int,
+
+	@field:SerializedName("avatar_url")
+	val avatarUrl: String,
 //
 //	@field:SerializedName("events_url")
 //	val eventsUrl: String,
@@ -91,15 +91,15 @@ data class UserResponse(
 //	@field:SerializedName("html_url")
 //	val htmlUrl: String,
 //
-//	@field:SerializedName("following")
-//	val following: Int,
-//
+	@field:SerializedName("following")
+	val following: Int,
+
 	@field:SerializedName("name")
 	val name: String,
-//
-//	@field:SerializedName("location")
-//	val location: String,
-//
+
+	@field:SerializedName("location")
+	val location: String,
+
 //	@field:SerializedName("node_id")
 //	val nodeId: String
 ) : Parcelable
