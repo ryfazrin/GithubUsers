@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
-class ListUserAdapter(private val listUser: ArrayList<User>) : RecyclerView.Adapter<ListUserAdapter.ListViewHolder>() {
+class ListUserAdapter(private val listUser: ArrayList<Users>) : RecyclerView.Adapter<ListUserAdapter.ListViewHolder>() {
 
     private lateinit var onItemClickCallback: OnItemCLickCallback
 
@@ -18,9 +18,9 @@ class ListUserAdapter(private val listUser: ArrayList<User>) : RecyclerView.Adap
 
     class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var imgPhoto: ImageView = itemView.findViewById(R.id.img_item_photo)
-        var tvName: TextView = itemView.findViewById(R.id.tv_item_name)
         var tvUsername: TextView = itemView.findViewById(R.id.tv_item_username)
-        var tvLocation: TextView = itemView.findViewById(R.id.tv_item_location)
+        var tvType: TextView = itemView.findViewById(R.id.tv_item_type)
+//        var tvLocation: TextView = itemView.findViewById(R.id.tv_item_location)
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ListViewHolder {
@@ -29,16 +29,16 @@ class ListUserAdapter(private val listUser: ArrayList<User>) : RecyclerView.Adap
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        val (name, username, location, avatar) = listUser[position]
+        val (login, avatar_url, type) = listUser[position]
         Glide.with(holder.itemView.context)
-            .load(avatar)
+            .load(avatar_url)
             .circleCrop()
             .into(holder.imgPhoto)
-        holder.tvName.text = name
-        holder.tvUsername.text = username
-        holder.tvLocation.text = location
+        holder.tvUsername.text = login
+        holder.tvType.text = type
+//        holder.tvLocation.text = location
 
-        holder.itemView.setOnClickListener { onItemClickCallback.onItemClicked(listUser[holder.adapterPosition]) }
+//        holder.itemView.setOnClickListener { onItemClickCallback.onItemClicked(listUser[holder.adapterPosition]) }
     }
 
     override fun getItemCount(): Int = listUser.size
