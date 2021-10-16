@@ -38,12 +38,12 @@ class ListUserAdapter(private val listUser: ArrayList<Users>) : RecyclerView.Ada
         holder.tvType.text = type
 //        holder.tvLocation.text = location
 
-//        holder.itemView.setOnClickListener { onItemClickCallback.onItemClicked(listUser[holder.adapterPosition]) }
+        holder.itemView.setOnClickListener { onItemClickCallback.onItemClicked(listUser[holder.adapterPosition]) }
     }
 
     override fun getItemCount(): Int = listUser.size
 
     interface OnItemCLickCallback {
-        fun onItemClicked(data: User)
+        fun onItemClicked(data: Users)
     }
 }

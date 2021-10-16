@@ -1,5 +1,6 @@
 package com.ryfazrin.githubusers
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -79,13 +80,6 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
-
-
-//        listUserAdapter.setOnItemClickCallback(object : ListUserAdapter.OnItemCLickCallback {
-//            override fun onItemClicked(data: User) {
-//                showSelectedUser(data)
-//            }
-//        })
     }
 
     private fun setUserData(users: List<Users>) {
@@ -97,6 +91,18 @@ class MainActivity : AppCompatActivity() {
 
         val adapter = ListUserAdapter(listUser)
         binding.rvUser.adapter = adapter
+
+        adapter.setOnItemClickCallback(object : ListUserAdapter.OnItemCLickCallback {
+            override fun onItemClicked(data: Users) {
+                showSelectedUser(data)
+            }
+        })
+    }
+
+    private fun showSelectedUser(user: Users) {
+        val moveDetailIntent = Intent(this@MainActivity, DetailUserActivity::class.java)
+        moveDetailIntent.putExtra(DetailUserActivity.EXTRA_USER, user)
+        startActivity(moveDetailIntent)
     }
 
     private fun showLoading(isLoading: Boolean) {
@@ -106,12 +112,6 @@ class MainActivity : AppCompatActivity() {
             binding.progressBar.visibility = View.GONE
         }
     }
-
-//    private fun showSelectedUser(user: User) {
-//        val moveDetailIntent = Intent(this@MainActivity, DetailUserActivity::class.java)
-//        moveDetailIntent.putExtra(DetailUserActivity.EXTRA_USER, user)
-//        startActivity(moveDetailIntent)
-//    }
 
     companion object {
         private const val TAG = "MainActivity"

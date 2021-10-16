@@ -19,8 +19,8 @@ data class UserResponse(
 //	@field:SerializedName("twitter_username")
 //	val twitterUsername: String,
 //
-//	@field:SerializedName("bio")
-//	val bio: String,
+	@field:SerializedName("bio")
+	val bio: String,
 //
 //	@field:SerializedName("created_at")
 //	val createdAt: String,

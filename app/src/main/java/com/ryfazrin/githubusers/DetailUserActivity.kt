@@ -8,39 +8,41 @@ import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.ryfazrin.githubusers.databinding.ActivityDetailUserBinding
 import java.text.DecimalFormat
 
 class DetailUserActivity : AppCompatActivity() {
 
-    private lateinit var user: User
+    private lateinit var user: Users
+    private lateinit var binding: ActivityDetailUserBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail_user)
+        binding = ActivityDetailUserBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
+//        val imgUser: ImageView = findViewById(R.id.img_detail_user)
+//        val tvName: TextView = findViewById(R.id.tv_detail_name)
+//        val tvFollowers: TextView = findViewById(R.id.tv_detail_followers)
+//        val tvFollowing: TextView = findViewById(R.id.tv_detail_following)
+//        val tvLocation: TextView = findViewById(R.id.tv_detail_location)
+//        val tvCompany: TextView = findViewById(R.id.tv_detail_company)
+//        val tvRepository: TextView = findViewById(R.id.tv_detail_repository)
 
-        val imgUser: ImageView = findViewById(R.id.img_detail_user)
-        val tvName: TextView = findViewById(R.id.tv_detail_name)
-        val tvFollowers: TextView = findViewById(R.id.tv_detail_followers)
-        val tvFollowing: TextView = findViewById(R.id.tv_detail_following)
-        val tvLocation: TextView = findViewById(R.id.tv_detail_location)
-        val tvCompany: TextView = findViewById(R.id.tv_detail_company)
-        val tvRepository: TextView = findViewById(R.id.tv_detail_repository)
+        user = intent.getParcelableExtra<Users>(EXTRA_USER) as Users
 
-        user = intent.getParcelableExtra<User>(EXTRA_USER) as User
-
-        supportActionBar?.title = user.username
+        supportActionBar?.title = user.login
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         Glide.with(this)
-            .load(user.avatar)
-            .into(imgUser)
-        tvName.text = user.name
-        tvFollowers.text = countViews(user.followers.toLong())
-        tvFollowing.text = countViews(user.following.toLong())
-        tvLocation.text = user.location
-        tvCompany.text = user.company
-        tvRepository.text = user.repository
+            .load(user.avatarUrl)
+            .into(binding.imgDetailUser)
+//        tvName.text = user.name
+//        tvFollowers.text = countViews(user.followers.toLong())
+//        tvFollowing.text = countViews(user.following.toLong())
+//        tvLocation.text = user.location
+//        tvCompany.text = user.company
+//        tvRepository.text = user.repository
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -56,13 +58,13 @@ class DetailUserActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.share -> {
-                val sendData = "Github User's\n\nName: ${user.name}\n\nUsername: ${user.username}\n\nCompany: ${user.company}"
+//                val sendData = "Github User's\n\nName: ${user.name}\n\nUsername: ${user.username}\n\nCompany: ${user.company}"
 
-                val intent = Intent()
-                intent.action = Intent.ACTION_SEND
-                intent.putExtra(Intent.EXTRA_TEXT, sendData)
-                intent.type="text/plain"
-                startActivity(Intent.createChooser(intent,"Share ${user.username} Github Profile :"))
+//                val intent = Intent()
+//                intent.action = Intent.ACTION_SEND
+//                intent.putExtra(Intent.EXTRA_TEXT, sendData)
+//                intent.type="text/plain"
+//                startActivity(Intent.createChooser(intent,"Share ${user.username} Github Profile :"))
             }
         }
         return super.onOptionsItemSelected(item)
