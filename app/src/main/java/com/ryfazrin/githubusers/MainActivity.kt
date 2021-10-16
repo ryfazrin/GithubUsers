@@ -58,8 +58,7 @@ class MainActivity : AppCompatActivity() {
 
         listUserAdapter.setOnItemClickCallback(object : ListUserAdapter.OnItemCLickCallback {
             override fun onItemClicked(data: User) {
-                val user2: User = User(username = data.username, name = data.name)
-                showSelectedUser(user2)
+                showSelectedUser(data)
             }
         })
     }
