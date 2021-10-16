@@ -1,5 +1,16 @@
 # GithubUsers
- My Submission 1 - Fundamental Aplikasi Android - Github User's
+ My Submission 2 - Fundamental Aplikasi Android - Github User's
+
+## Fitur yang diujikan
+Yang ingin ditambahkan :
+
+- merubah sumber data menjadi API
+
+- menambahkan fitur pencarian user di halaman utama dan hasil dapat diklik menuju detail user
+
+- fragment list follower dan following didalam detail user menggunakan tabLayout
+
+- ada indikator loading ketika memuat data
 
 ## improvisasi 
 
