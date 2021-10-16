@@ -28,7 +28,6 @@ class MainActivity : AppCompatActivity() {
             val dataUsername = resources.getStringArray(R.array.username)
             val dataLocation = resources.getStringArray(R.array.location)
             val dataAvatar = resources.obtainTypedArray(R.array.avatar)
-            dataAvatar.recycle()
             val dataRepository = resources.getStringArray(R.array.repository)
             val dataCompany = resources.getStringArray(R.array.company)
             val dataFollowers = resources.getStringArray(R.array.followers)
