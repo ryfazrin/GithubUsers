@@ -110,6 +110,6 @@ data class Users(
 	val login: String,
 	@field:SerializedName("avatar_url")
 	val avatarUrl: String,
-	@field:SerializedName("id")
-	val id: Int,
+	@field:SerializedName("type")
+	val type: String
 ) : Parcelable
