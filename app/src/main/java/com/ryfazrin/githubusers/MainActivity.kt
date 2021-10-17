@@ -66,36 +66,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-//    private val listUser: ArrayList<User>
-//        get() {
-//            val dataName = resources.getStringArray(R.array.name)
-//            val dataUsername = resources.getStringArray(R.array.username)
-//            val dataLocation = resources.getStringArray(R.array.location)
-//            val dataAvatar = resources.obtainTypedArray(R.array.avatar)
-//            val dataRepository = resources.getStringArray(R.array.repository)
-//            val dataCompany = resources.getStringArray(R.array.company)
-//            val dataFollowers = resources.getStringArray(R.array.followers)
-//            val dataFollowing = resources.getStringArray(R.array.following)
-//
-//            val listUser = ArrayList<User>()
-//            for (i in dataName.indices) {
-//                val user = User(
-//                    name = dataName[i],
-//                    username = dataUsername[i],
-//                    location = dataLocation[i],
-//                    avatar = dataAvatar.getResourceId(i, -1),
-//                    repository = dataRepository[i],
-//                    company = dataCompany[i],
-//                    followers = dataFollowers[i],
-//                    following = dataFollowing[i]
-//                )
-//                listUser.add(user)
-//            }
-//            return listUser
-//        }
-
     private fun showRecyclerList() {
-//        val listUserAdapter = ListUserAdapter(list)
         showLoading(true)
         val client = ApiConfig.getApiService().getUser()
         client.enqueue(object : Callback<List<Users>> {
