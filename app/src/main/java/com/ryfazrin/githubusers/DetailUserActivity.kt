@@ -79,11 +79,11 @@ class DetailUserActivity : AppCompatActivity() {
             .load(user.avatarUrl)
             .into(binding.imgDetailUser)
         binding.tvDetailName.text = user.name
-        binding.tvDetailFollowers.text = user.followers.toString()
-        binding.tvDetailFollowing.text = user.following.toString()
+        binding.tvDetailFollowers.text = countViews(user.followers.toLong())
+        binding.tvDetailFollowing.text = countViews(user.following.toLong())
         binding.tvDetailLocation.text = user.location
         binding.tvDetailCompany.text = user.company
-        binding.tvDetailRepository.text = user.publicRepos.toString()
+        binding.tvDetailRepository.text = countViews(user.publicRepos.toLong())
     }
 
     override fun onSupportNavigateUp(): Boolean {
