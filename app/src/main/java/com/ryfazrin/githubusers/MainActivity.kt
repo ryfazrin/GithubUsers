@@ -1,17 +1,22 @@
 package com.ryfazrin.githubusers
 
+import android.app.SearchManager
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.view.View
+import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ryfazrin.githubusers.databinding.ActivityMainBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import kotlin.collections.ArrayList as ArrayList
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,7 +33,37 @@ class MainActivity : AppCompatActivity() {
 
         val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
         binding.rvUser.addItemDecoration(itemDecoration)
+
         showRecyclerList()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchView = menu?.findItem(R.id.search)?.actionView as SearchView
+
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        searchView.queryHint = resources.getString(R.string.search)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            /*
+             Gunakan method ini ketika search selesai atau OK
+             */
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                Toast.makeText(this@MainActivity, query, Toast.LENGTH_SHORT).show()
+                return true
+            }
+
+            /*
+             Gunakan method ini untuk merespon tiap perubahan huruf pada SearchView
+             */
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+        })
+
+        return true
+
     }
 
 //    private val listUser: ArrayList<User>
