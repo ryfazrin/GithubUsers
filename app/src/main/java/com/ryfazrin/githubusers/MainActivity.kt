@@ -107,7 +107,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun showSelectedUser(user: Users) {
         val moveDetailIntent = Intent(this@MainActivity, DetailUserActivity::class.java)
-        moveDetailIntent.putExtra(DetailUserActivity.EXTRA_USER, user)
+        // moveDetailIntent.putExtra(DetailUserActivity.EXTRA_USER, user)
+        moveDetailIntent.putExtra(DetailUserActivity.EXTRA_USER, user.login)
         startActivity(moveDetailIntent)
     }
 

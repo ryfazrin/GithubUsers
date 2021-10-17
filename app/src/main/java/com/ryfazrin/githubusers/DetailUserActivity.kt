@@ -20,7 +20,7 @@ import retrofit2.Response
 
 class DetailUserActivity : AppCompatActivity() {
 
-    private lateinit var user: Users
+    private lateinit var user: String
     private lateinit var binding: ActivityDetailUserBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,10 +36,11 @@ class DetailUserActivity : AppCompatActivity() {
 //        val tvCompany: TextView = findViewById(R.id.tv_detail_company)
 //        val tvRepository: TextView = findViewById(R.id.tv_detail_repository)
 
-        user = intent.getParcelableExtra<Users>(EXTRA_USER) as Users
+        // user = intent.getParcelableExtra<Users>(EXTRA_USER) as Users
+        user = intent.getStringExtra(EXTRA_USER).toString()
 
-        Log.e(TAG, "onResponse Detail: ${user.login}")
-        Log.e(TAG, "onResponse Detail: ${user}")
+//        Log.e(TAG, "onResponse Detail: ${user.login}")
+//        Log.e(TAG, "onResponse Detail: ${user}")
 
         val sectionPagerAdapter = SectionDetailUserPagerAdapter(this@DetailUserActivity)
         val viewPager: ViewPager2 = binding.vpUserFollow
@@ -49,7 +50,7 @@ class DetailUserActivity : AppCompatActivity() {
             tab.text = resources.getString(TAB_TITLES[position])
         }.attach()
 
-        supportActionBar?.title = user.login
+        supportActionBar?.title = user
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
 //        tvName.text = user.name
@@ -64,7 +65,7 @@ class DetailUserActivity : AppCompatActivity() {
 
     private fun findUser() {
         showLoading(true)
-        val client = ApiConfig.getApiService().getDetailUser(user.login)
+        val client = ApiConfig.getApiService().getDetailUser(user)
         client.enqueue(object : Callback<UserDetailResponse> {
             override fun onResponse(
                 call: Call<UserDetailResponse>,
