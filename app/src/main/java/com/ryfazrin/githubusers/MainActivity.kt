@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ryfazrin.githubusers.API.ApiConfig
 import com.ryfazrin.githubusers.databinding.ActivityMainBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -92,7 +93,6 @@ class MainActivity : AppCompatActivity() {
         val listUser = ArrayList<Users>()
         for (user in users) {
             listUser.add(user)
-//            Log.d(TAG, "setUserData: $user")
         }
 
         val adapter = ListUserAdapter(listUser)
