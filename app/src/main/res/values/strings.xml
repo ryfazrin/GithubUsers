@@ -10,4 +10,5 @@
     <string name="text_location">Text Location</string>
     <string name="company">Company</string>
     <string name="repositories">Repositories</string>
+    <string name="search">Search User…</string>
 </resources>
