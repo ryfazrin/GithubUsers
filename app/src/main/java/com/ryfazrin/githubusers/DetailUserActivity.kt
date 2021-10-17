@@ -1,15 +1,17 @@
 package com.ryfazrin.githubusers
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.annotation.StringRes
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
+import com.ryfazrin.githubusers.API.ApiConfig
 import com.ryfazrin.githubusers.databinding.ActivityDetailUserBinding
 import retrofit2.Call
 import java.text.DecimalFormat
@@ -35,6 +37,17 @@ class DetailUserActivity : AppCompatActivity() {
 //        val tvRepository: TextView = findViewById(R.id.tv_detail_repository)
 
         user = intent.getParcelableExtra<Users>(EXTRA_USER) as Users
+
+        Log.e(TAG, "onResponse Detail: ${user.login}")
+        Log.e(TAG, "onResponse Detail: ${user}")
+
+        val sectionPagerAdapter = SectionDetailUserPagerAdapter(this@DetailUserActivity)
+        val viewPager: ViewPager2 = binding.vpUserFollow
+        viewPager.adapter = sectionPagerAdapter
+        val tabs: TabLayout = binding.tlUserFollow
+        TabLayoutMediator(tabs, viewPager) { tab, position ->
+            tab.text = resources.getString(TAB_TITLES[position])
+        }.attach()
 
         supportActionBar?.title = user.login
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -133,5 +146,11 @@ class DetailUserActivity : AppCompatActivity() {
     companion object {
         private const val TAG = "DetailUserActivity"
         const val EXTRA_USER = "extra_user"
+
+        @StringRes
+        private val TAB_TITLES = intArrayOf(
+            R.string.followers,
+            R.string.following
+        )
     }
 }
