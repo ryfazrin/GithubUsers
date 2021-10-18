@@ -2,6 +2,44 @@
  My Submission 2 - Fundamental Aplikasi Android - Github User's
 
 ## Fitur yang diujikan
+Fitur yang harus ada pada aplikasi:
+
+Search User
+Syarat:
+Pencarian user menggunakan data dari API berjalan dengan baik. (Selesai)
+Pengguna dapat melihat halaman detail dari hasil daftar pencarian. (Selesai)
+
+Detail User
+Syarat:
+Mempertahankan fitur informasi user (User Details) yang sudah ditampilkan pada Submission 1. (Selesai)
+Menampilkan fragment List Follower & List Following yang diambil dari API. (Selesai)
+Menggunakan TabLayout sebagai navigasi antara halaman List Follower dan List Following. (Selesai)
+
+Terdapat indikator loading saat aplikasi memuat data. (Selesa)
+
+Improvisasi :
+
+Aplikasi sesuai standar.
+
+Kode bersih.
+
+Aplikasi bisa menjaga data ketika orientasi dari potrait ke landscape atau sebaliknya.
+
+Menggunakan library networking Retrofit.
+
+Menggunakan RoboPojoGenerator untuk membuat data class response dan di custom.
+
+Menerapkan Android Architecture Component yaitu ViewModel dan LiveData.
+
+Terdapat halaman utama users menggunakan endpoint https://api.github.com/users.
+
+Merapikan file kedalam package directory.
+
+Tema warna yang elegan.
+
+Terdapat fitur Refresh di Halaman Utama.
+
+terdapat fitur share di Halaman Detail User.
 Yang ingin ditambahkan :
 
 - merubah sumber data menjadi API
@@ -12,7 +50,7 @@ Yang ingin ditambahkan :
 
 - ada indikator loading ketika memuat data
 
-## improvisasi 
+## improvisasi Submission
 
 Halaman List User :
 - Gambar Menggunakan plugin Glide
