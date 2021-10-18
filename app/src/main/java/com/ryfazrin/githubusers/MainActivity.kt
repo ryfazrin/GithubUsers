@@ -5,11 +5,13 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Message
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ryfazrin.githubusers.API.ApiConfig
@@ -21,6 +23,7 @@ import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var mainViewModel: MainViewModel
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,13 +32,25 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        mainViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(MainViewModel::class.java)
+
+        mainViewModel.users.observe(this, { user ->
+            setUserData(user)
+        })
+
         val layoutManager = LinearLayoutManager(this)
         binding.rvUser.layoutManager = layoutManager
 
         val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
         binding.rvUser.addItemDecoration(itemDecoration)
 
-        showFirstListUsers()
+        mainViewModel.isLoading.observe(this, {
+            showLoading(it)
+        })
+
+        mainViewModel.isMessage.observe(this, {
+            showError(it)
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -71,7 +86,9 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             // Check if user triggered a refresh:
             R.id.refresh -> {
-                showFirstListUsers()
+                mainViewModel.users.observe(this, { user ->
+                    setUserData(user)
+                })
                 return true
             }
         }
@@ -123,29 +140,7 @@ class MainActivity : AppCompatActivity() {
 ////        })
 //    }
 
-    private fun showFirstListUsers() {
-        showLoading(true)
-        val client = ApiConfig.getApiService().getUser()
-        client.enqueue(object : Callback<List<Users>> {
-            override fun onResponse(call: Call<List<Users>>, response: Response<List<Users>>) {
-                showLoading(false)
-                if (response.isSuccessful) {
-                    val responseBody = response.body()
-                    if (responseBody != null) {
-                        showError(false)
-                        setUserData(responseBody)
-                    }
-                }
-            }
-
-            override fun onFailure(call: Call<List<Users>>, t: Throwable) {
-                showLoading(false)
-                showError(true)
-                Log.e(TAG, "onFailure: ${t.message}")
-            }
-
-        })
-    }
+    // showFirstListUsers() { }
 
     private fun setUserData(users: List<Users>) {
         var listUser = ArrayList<Users>()
@@ -179,8 +174,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showError(isLoading: Boolean) {
-        if (isLoading) {
+    private fun showError(isMessage: Boolean) {
+        if (isMessage) {
             binding.errorMessage.visibility = View.VISIBLE
         } else {
             binding.errorMessage.visibility = View.GONE
