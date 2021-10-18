@@ -35,10 +35,6 @@ class MainActivity : AppCompatActivity() {
         val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
         binding.rvUser.addItemDecoration(itemDecoration)
 
-        binding.swipeRefresh.setOnRefreshListener {
-            showFirstListUsers()
-            binding.swipeRefresh.isRefreshing = false
-        }
         showFirstListUsers()
     }
 
@@ -95,6 +91,7 @@ class MainActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null) {
+                        showError(false)
                         setUserData(responseBody.items)
 //                        Log.e(TAG, "onResponse: ${responseBody.items}")
                     }
@@ -103,6 +100,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<UsersSearch>, t: Throwable) {
                 showLoading(false)
+                showError(true)
                 Log.e(TAG, "onFailure: ${t.message}")
             }
 
