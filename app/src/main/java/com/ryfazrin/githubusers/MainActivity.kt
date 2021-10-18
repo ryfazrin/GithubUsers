@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
         binding.rvUser.addItemDecoration(itemDecoration)
 
-        showRecyclerList()
+        showFirstListUsers()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -50,8 +49,8 @@ class MainActivity : AppCompatActivity() {
             /*
              Gunakan method ini ketika search selesai atau OK
              */
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                Toast.makeText(this@MainActivity, query, Toast.LENGTH_SHORT).show()
+            override fun onQueryTextSubmit(query: String): Boolean {
+                showSearchUser(query)
                 return true
             }
 
@@ -67,7 +66,49 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun showRecyclerList() {
+    private fun showSearchUser(query: String) {
+//        binding.rvUser.adapter.clear
+//        Log.e(TAG, "adapter: ${binding.rvUser.adapter}")
+        showLoading(true)
+        val client = ApiConfig.getApiService().getSearchUser(query)
+//        Log.e(TAG, "onResponse: $client")
+        client.enqueue(object : Callback<UsersSearch> {
+            override fun onResponse(call: Call<UsersSearch>, response: Response<UsersSearch>) {
+                showLoading(false)
+                if (response.isSuccessful) {
+                    val responseBody = response.body()
+                    if (responseBody != null) {
+                        setUserData(responseBody.items)
+//                        Log.e(TAG, "onResponse: ${responseBody.items}")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<UsersSearch>, t: Throwable) {
+                showLoading(false)
+                Log.e(TAG, "onFailure: ${t.message}")
+            }
+
+        })
+    }
+
+//    private fun setUserSearch(users: List<Users>) {
+//        val listUser = ArrayList<String>()
+//        for (user in users) {
+//            listUser.add(user.login)
+//        }
+//
+//        val adapter = ListUserSearchAdapter(listUser)
+//        binding.rvUser.adapter = adapter
+//
+////        adapter.setOnItemClickCallback(object : ListUserSearchAdapter.OnItemCLickCallback {
+////            override fun onItemClicked(data: Users) {
+////                showSelectedUser(data)
+////            }
+////        })
+//    }
+
+    private fun showFirstListUsers() {
         showLoading(true)
         val client = ApiConfig.getApiService().getUser()
         client.enqueue(object : Callback<List<Users>> {
@@ -90,7 +131,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUserData(users: List<Users>) {
-        val listUser = ArrayList<Users>()
+        var listUser = ArrayList<Users>()
+        listUser.clear()
         for (user in users) {
             listUser.add(user)
         }
