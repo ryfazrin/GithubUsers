@@ -1,10 +1,12 @@
-package com.ryfazrin.githubusers
+package com.ryfazrin.githubusers.ui.main
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.ryfazrin.githubusers.API.ApiConfig
+import com.ryfazrin.githubusers.Users
+import com.ryfazrin.githubusers.UsersSearch
+import com.ryfazrin.githubusers.api.ApiConfig
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

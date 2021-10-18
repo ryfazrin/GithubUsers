@@ -1,4 +1,4 @@
-package com.ryfazrin.githubusers
+package com.ryfazrin.githubusers.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +7,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.ryfazrin.githubusers.R
+import com.ryfazrin.githubusers.Users
 
 class FollowAdapter(private val listFollowers: ArrayList<Users>) : RecyclerView.Adapter<FollowAdapter.ViewHolder>() {
 
@@ -23,7 +25,7 @@ class FollowAdapter(private val listFollowers: ArrayList<Users>) : RecyclerView.
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_row_follow, parent, false))
     }
 
-    override fun onBindViewHolder(holder: FollowAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val (login, avatar_url, type) = listFollowers[position]
         Glide.with(holder.itemView.context)
             .load(avatar_url)

@@ -1,61 +1,60 @@
-package com.ryfazrin.githubusers
+package com.ryfazrin.githubusers.ui.followers
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ryfazrin.githubusers.API.ApiConfig
-import com.ryfazrin.githubusers.databinding.FragmentFollowingBinding
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.ryfazrin.githubusers.adapter.FollowAdapter
+import com.ryfazrin.githubusers.Users
+import com.ryfazrin.githubusers.databinding.FragmentFollowersBinding
 
-class FollowingFragment : Fragment() {
+class FollowersFragment : Fragment() {
 
-    private lateinit var binding: FragmentFollowingBinding
+    private lateinit var binding: FragmentFollowersBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        binding = FragmentFollowingBinding.inflate(inflater, container, false)
+//        return inflater.inflate(R.layout.fragment_followers, container, false)
+        binding = FragmentFollowersBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val followingViewModel = ViewModelProvider(this).get(FollowingViewModel::class.java)
+        val followersViewModel = ViewModelProvider(this).get(FollowersViewModel::class.java)
 
-        val getUser: String = requireArguments().getString(FollowersFragment.EXTRA_USER).toString()
+        val getUser: String = requireArguments().getString(EXTRA_USER).toString()
 
-        followingViewModel.showListFollowing(getUser)
-        followingViewModel.users.observe(viewLifecycleOwner, { user ->
-            setFollowingData(user)
+        followersViewModel.showListFollowers(getUser)
+        followersViewModel.users.observe(viewLifecycleOwner, { user ->
+            setFollowerData(user)
         })
     }
 
-    // showListFollowing() {}
+    // showListFollowers()
 
-    private fun setFollowingData(users: List<Users>) {
-        val listFollowing = ArrayList<Users>()
+    private fun setFollowerData(users: List<Users>) {
+        val listFollower = ArrayList<Users>()
         for (user in users) {
-            listFollowing.add(user)
+            listFollower.add(user)
         }
 
-        binding.rvFollowing.apply {
+        binding.rvFollowers.apply {
             layoutManager = LinearLayoutManager(requireContext()) // activity or requireContext()
-            adapter = FollowAdapter(listFollowing)
+            adapter = FollowAdapter(listFollower)
+//            adapter = ListUserAdapter(listFollower)
         }
 //        val adapter = FollowerAdapter(listFollower)
 //        binding.rvFollowers.adapter = adapter
 //        binding.rvFollowers.layoutManager = LinearLayoutManager(requireContext())
     }
+
 
     companion object {
         const val EXTRA_USER = "extra_user"
@@ -63,7 +62,7 @@ class FollowingFragment : Fragment() {
 
         @JvmStatic
         fun newInstance(index: Int, string: String) =
-            FollowingFragment().apply {
+            FollowersFragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_SECTION_NUMBER, index)
                     putString(EXTRA_USER, string)

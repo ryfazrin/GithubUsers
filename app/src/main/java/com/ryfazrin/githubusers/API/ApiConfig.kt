@@ -1,4 +1,4 @@
-package com.ryfazrin.githubusers.API
+package com.ryfazrin.githubusers.api
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

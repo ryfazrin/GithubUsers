@@ -5,8 +5,6 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Message
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -14,11 +12,10 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ryfazrin.githubusers.API.ApiConfig
+import com.ryfazrin.githubusers.adapter.ListUserAdapter
 import com.ryfazrin.githubusers.databinding.ActivityMainBinding
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.ryfazrin.githubusers.ui.detailuser.DetailUserActivity
+import com.ryfazrin.githubusers.ui.main.MainViewModel
 import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
@@ -32,7 +29,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        mainViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(MainViewModel::class.java)
+        mainViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(
+            MainViewModel::class.java)
         mainViewModel.users.observe(this, { user ->
             setUserData(user)
         })
@@ -95,26 +93,10 @@ class MainActivity : AppCompatActivity() {
 
     // showSearchUser() { }
 
-//    private fun setUserSearch(users: List<Users>) {
-//        val listUser = ArrayList<String>()
-//        for (user in users) {
-//            listUser.add(user.login)
-//        }
-//
-//        val adapter = ListUserSearchAdapter(listUser)
-//        binding.rvUser.adapter = adapter
-//
-////        adapter.setOnItemClickCallback(object : ListUserSearchAdapter.OnItemCLickCallback {
-////            override fun onItemClicked(data: Users) {
-////                showSelectedUser(data)
-////            }
-////        })
-//    }
-
     // showFirstListUsers() { }
 
     private fun setUserData(users: List<Users>) {
-        var listUser = ArrayList<Users>()
+        val listUser = ArrayList<Users>()
         listUser.clear()
         for (user in users) {
             listUser.add(user)

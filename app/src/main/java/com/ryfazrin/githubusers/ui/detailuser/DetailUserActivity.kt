@@ -1,9 +1,8 @@
-package com.ryfazrin.githubusers
+package com.ryfazrin.githubusers.ui.detailuser
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -13,12 +12,11 @@ import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.ryfazrin.githubusers.API.ApiConfig
+import com.ryfazrin.githubusers.R
+import com.ryfazrin.githubusers.adapter.SectionDetailUserPagerAdapter
+import com.ryfazrin.githubusers.UserDetailResponse
 import com.ryfazrin.githubusers.databinding.ActivityDetailUserBinding
-import retrofit2.Call
 import java.text.DecimalFormat
-import retrofit2.Callback
-import retrofit2.Response
 
 class DetailUserActivity : AppCompatActivity() {
 
@@ -32,7 +30,8 @@ class DetailUserActivity : AppCompatActivity() {
         binding = ActivityDetailUserBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        detailUserViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(DetailUserViewModel::class.java)
+        detailUserViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(
+            DetailUserViewModel::class.java)
 
 //        val imgUser: ImageView = findViewById(R.id.img_detail_user)
 //        val tvName: TextView = findViewById(R.id.tv_detail_name)
@@ -44,14 +43,6 @@ class DetailUserActivity : AppCompatActivity() {
 
         // user = intent.getParcelableExtra<Users>(EXTRA_USER) as Users
         val getUser: String = intent.getStringExtra(EXTRA_USER).toString()
-
-//        val mFollowersFragment = FollowersFragment()
-//        val mBundle = Bundle()
-//        mBundle.putString(FollowersFragment.EXTRA_USER, user)
-//        mFollowersFragment.arguments = mBundle
-
-//        Log.e(TAG, "onResponse Detail: ${user.login}")
-//        Log.e(TAG, "onResponse Detail: ${user}")
 
         val sectionPagerAdapter = SectionDetailUserPagerAdapter(this@DetailUserActivity, getUser)
         val viewPager: ViewPager2 = binding.vpUserFollow

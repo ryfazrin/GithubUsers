@@ -1,4 +1,4 @@
-package com.ryfazrin.githubusers
+package com.ryfazrin.githubusers.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +7,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.ryfazrin.githubusers.R
+import com.ryfazrin.githubusers.Users
 
 class ListUserAdapter(private val listUser: ArrayList<Users>) : RecyclerView.Adapter<ListUserAdapter.ListViewHolder>() {
 
