@@ -12,6 +12,7 @@
     <string name="repositories">Repositories</string>
     <string name="search">Search username…</string>
     <string name="zero_number">0</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="menu_refresh">refresh</string>
+    <string name="refresh_message">Try Refresh</string>
+    <string name="github_type">Github Type</string>
 </resources>
