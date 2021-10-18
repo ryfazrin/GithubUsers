@@ -23,6 +23,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.300"
                     tools:visibility="visible" />
 
                 <ImageView
@@ -136,7 +137,8 @@
                     app:layout_constraintEnd_toEndOf="@+id/diver_1"
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toEndOf="@+id/text_company"
-                    app:layout_constraintTop_toTopOf="@+id/text_company" />
+                    app:layout_constraintTop_toTopOf="@+id/text_company"
+                    app:layout_constraintVertical_bias="1.0" />
 
                 <View
                     android:id="@+id/diver_2"
@@ -185,7 +187,7 @@
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/vp_user_follow"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="400dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tl_user_follow" />
