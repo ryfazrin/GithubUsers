@@ -33,7 +33,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         mainViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(MainViewModel::class.java)
-
         mainViewModel.users.observe(this, { user ->
             setUserData(user)
         })
@@ -66,7 +65,7 @@ class MainActivity : AppCompatActivity() {
              Gunakan method ini ketika search selesai atau OK
              */
             override fun onQueryTextSubmit(query: String): Boolean {
-                showSearchUser(query)
+                mainViewModel.showSearchUser(query)
                 return true
             }
 
@@ -96,33 +95,7 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun showSearchUser(query: String) {
-//        binding.rvUser.adapter.clear
-//        Log.e(TAG, "adapter: ${binding.rvUser.adapter}")
-        showLoading(true)
-        val client = ApiConfig.getApiService().getSearchUser(query)
-//        Log.e(TAG, "onResponse: $client")
-        client.enqueue(object : Callback<UsersSearch> {
-            override fun onResponse(call: Call<UsersSearch>, response: Response<UsersSearch>) {
-                showLoading(false)
-                if (response.isSuccessful) {
-                    val responseBody = response.body()
-                    if (responseBody != null) {
-                        showError(false)
-                        setUserData(responseBody.items)
-//                        Log.e(TAG, "onResponse: ${responseBody.items}")
-                    }
-                }
-            }
-
-            override fun onFailure(call: Call<UsersSearch>, t: Throwable) {
-                showLoading(false)
-                showError(true)
-                Log.e(TAG, "onFailure: ${t.message}")
-            }
-
-        })
-    }
+    // showSearchUser() { }
 
 //    private fun setUserSearch(users: List<Users>) {
 //        val listUser = ArrayList<String>()

@@ -34,7 +34,6 @@ class MainViewModel : ViewModel() {
                     val responseBody = response.body()
                     if (responseBody != null) {
                         _isMessage.value = false
-                        // showError(false)
                         _users.value = responseBody
                     }
                 }
@@ -44,6 +43,30 @@ class MainViewModel : ViewModel() {
                 _isLoading.value = false
                 _isMessage.value = true
                 // showError(true)
+                Log.e(TAG, "onFailure: ${t.message}")
+            }
+
+        })
+    }
+
+    fun showSearchUser(query: String) {
+        _isLoading.value = true
+        val client = ApiConfig.getApiService().getSearchUser(query)
+        client.enqueue(object : Callback<UsersSearch> {
+            override fun onResponse(call: Call<UsersSearch>, response: Response<UsersSearch>) {
+                _isLoading.value = false
+                if (response.isSuccessful) {
+                    val responseBody = response.body()
+                    if (responseBody != null) {
+                        _isMessage.value = false
+                        _users.value = responseBody.items
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<UsersSearch>, t: Throwable) {
+                _isLoading.value = false
+                _isMessage.value = true
                 Log.e(TAG, "onFailure: ${t.message}")
             }
 
