@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.annotation.StringRes
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
@@ -21,14 +22,17 @@ import retrofit2.Response
 
 class DetailUserActivity : AppCompatActivity() {
 
-    private lateinit var getUser: String
-    private lateinit var user: UserDetailResponse
+//    private lateinit var getUser: String
+//    private lateinit var user: UserDetailResponse
+    private lateinit var detailUserViewModel: DetailUserViewModel
     private lateinit var binding: ActivityDetailUserBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailUserBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        detailUserViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(DetailUserViewModel::class.java)
 
 //        val imgUser: ImageView = findViewById(R.id.img_detail_user)
 //        val tvName: TextView = findViewById(R.id.tv_detail_name)
@@ -39,7 +43,7 @@ class DetailUserActivity : AppCompatActivity() {
 //        val tvRepository: TextView = findViewById(R.id.tv_detail_repository)
 
         // user = intent.getParcelableExtra<Users>(EXTRA_USER) as Users
-        getUser = intent.getStringExtra(EXTRA_USER).toString()
+        val getUser: String = intent.getStringExtra(EXTRA_USER).toString()
 
 //        val mFollowersFragment = FollowersFragment()
 //        val mBundle = Bundle()
@@ -67,35 +71,18 @@ class DetailUserActivity : AppCompatActivity() {
 //        tvCompany.text = user.company
 //        tvRepository.text = user.repository
 
-        findUser()
-    }
+        detailUserViewModel.findUser(getUser)
 
-    private fun findUser() {
-        showLoading(true)
-        val client = ApiConfig.getApiService().getDetailUser(getUser)
-        client.enqueue(object : Callback<UserDetailResponse> {
-            override fun onResponse(
-                call: Call<UserDetailResponse>,
-                response: Response<UserDetailResponse>
-            ) {
-                showLoading(false)
-                if (response.isSuccessful) {
-                    val responseBody = response.body()
-                    if (responseBody != null) {
-//                        setUserData(responseBody)
-                        user = responseBody
-                        setUserData(user)
-                    }
-                }
-            }
+        detailUserViewModel.user.observe(this, {
+            setUserData(it)
+        })
 
-            override fun onFailure(call: Call<UserDetailResponse>, t: Throwable) {
-                showLoading(false)
-                Log.e(TAG, "onFailure: ${t.message}")
-            }
-
+        detailUserViewModel.isLoading.observe(this, {
+            showLoading(it)
         })
     }
+
+    // findUser() { }
 
     private fun setUserData(user: UserDetailResponse) {
         Glide.with(this)
@@ -122,13 +109,15 @@ class DetailUserActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.share -> {
-                val sendData = "Github User's\n\nName: ${user.name}\n\nUsername: ${user.login}\n\nCompany: ${user.company}"
+                detailUserViewModel.user.observe(this, { user ->
+                    val sendData = "Github User's\n\nName: ${user.name}\n\nUsername: ${user.login}\n\nCompany: ${user.company}"
 
-                val intent = Intent()
-                intent.action = Intent.ACTION_SEND
-                intent.putExtra(Intent.EXTRA_TEXT, sendData)
-                intent.type="text/plain"
-                startActivity(Intent.createChooser(intent,"Share ${user.login} Github Profile :"))
+                    val intent = Intent()
+                    intent.action = Intent.ACTION_SEND
+                    intent.putExtra(Intent.EXTRA_TEXT, sendData)
+                    intent.type="text/plain"
+                    startActivity(Intent.createChooser(intent,"Share ${user.login} Github Profile :"))
+                })
             }
         }
         return super.onOptionsItemSelected(item)
@@ -154,7 +143,6 @@ class DetailUserActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val TAG = "DetailUserActivity"
         const val EXTRA_USER = "extra_user"
 
         @StringRes
