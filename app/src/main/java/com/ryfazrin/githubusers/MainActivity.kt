@@ -85,9 +85,7 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             // Check if user triggered a refresh:
             R.id.refresh -> {
-                mainViewModel.users.observe(this, { user ->
-                    setUserData(user)
-                })
+                mainViewModel.showFirstListUsers()
                 return true
             }
         }
