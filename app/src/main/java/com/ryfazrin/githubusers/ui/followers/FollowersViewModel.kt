@@ -15,16 +15,21 @@ class FollowersViewModel : ViewModel() {
     private val _users = MutableLiveData<List<Users>>()
     val users: LiveData<List<Users>> = _users
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+
     fun showListFollowers(getUser: String) {
 //        val data = requireArguments().getString(FollowersFragment.EXTRA_USER).toString()
-
         // test ambil data
 //        Log.d("fragmentfollow", "Tes: ${data}")
 //        binding.testText.text = data
         // val client = ApiConfig.getApiService().getDetailFollowers(DetailUserActivity.EXTRA_USER)
+
+        _isLoading.value = true
         val client = ApiConfig.getApiService().getDetailFollowers(getUser)
         client.enqueue(object : Callback<List<Users>> {
             override fun onResponse(call: Call<List<Users>>, response: Response<List<Users>>) {
+                _isLoading.value = false
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null) {
@@ -35,6 +40,7 @@ class FollowersViewModel : ViewModel() {
             }
 
             override fun onFailure(call: Call<List<Users>>, t: Throwable) {
+                _isLoading.value = false
                 Log.e(TAG, "onFailure: ${t.message}")
             }
         })

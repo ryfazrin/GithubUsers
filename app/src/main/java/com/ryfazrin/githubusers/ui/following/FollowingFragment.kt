@@ -36,6 +36,10 @@ class FollowingFragment : Fragment() {
         followingViewModel.users.observe(viewLifecycleOwner, { user ->
             setFollowingData(user)
         })
+
+        followingViewModel.isLoading.observe(viewLifecycleOwner, {
+            showLoading(it)
+        })
     }
 
     // showListFollowing() {}
@@ -53,6 +57,14 @@ class FollowingFragment : Fragment() {
 //        val adapter = FollowerAdapter(listFollower)
 //        binding.rvFollowers.adapter = adapter
 //        binding.rvFollowers.layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading) {
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.visibility = View.GONE
+        }
     }
 
     companion object {
