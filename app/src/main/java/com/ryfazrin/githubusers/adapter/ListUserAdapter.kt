@@ -22,25 +22,27 @@ class ListUserAdapter(private val listUser: ArrayList<Users>) : RecyclerView.Ada
         var imgPhoto: ImageView = itemView.findViewById(R.id.img_item_photo)
         var tvUsername: TextView = itemView.findViewById(R.id.tv_item_username)
         var tvType: TextView = itemView.findViewById(R.id.tv_item_type)
-//        var tvLocation: TextView = itemView.findViewById(R.id.tv_item_location)
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ListViewHolder {
-        val view: View = LayoutInflater.from(viewGroup.context).inflate(R.layout.item_row_user, viewGroup, false)
+        val view: View =
+            LayoutInflater.from(viewGroup.context).inflate(R.layout.item_row_user, viewGroup, false)
         return ListViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val (login, avatar_url, type) = listUser[position]
+
         Glide.with(holder.itemView.context)
             .load(avatar_url)
             .circleCrop()
             .into(holder.imgPhoto)
         holder.tvUsername.text = login
         holder.tvType.text = type
-//        holder.tvLocation.text = location
 
-        holder.itemView.setOnClickListener { onItemClickCallback.onItemClicked(listUser[holder.adapterPosition]) }
+        holder.itemView.setOnClickListener {
+            onItemClickCallback.onItemClicked(listUser[holder.adapterPosition])
+        }
     }
 
     override fun getItemCount(): Int = listUser.size

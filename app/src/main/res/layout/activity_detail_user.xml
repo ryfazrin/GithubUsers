@@ -135,10 +135,8 @@
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/text_company"
                     app:layout_constraintEnd_toEndOf="@+id/diver_1"
-                    app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toEndOf="@+id/text_company"
-                    app:layout_constraintTop_toTopOf="@+id/text_company"
-                    app:layout_constraintVertical_bias="1.0" />
+                    app:layout_constraintTop_toTopOf="@+id/text_company" />
 
                 <View
                     android:id="@+id/diver_2"

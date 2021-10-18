@@ -6,7 +6,8 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.ryfazrin.githubusers.ui.followers.FollowersFragment
 import com.ryfazrin.githubusers.ui.following.FollowingFragment
 
-class SectionDetailUserPagerAdapter(activity: AppCompatActivity, private val getUserData: String) : FragmentStateAdapter(activity) {
+class SectionDetailUserPagerAdapter(activity: AppCompatActivity, private val getUserData: String)
+    : FragmentStateAdapter(activity) {
 
     override fun createFragment(position: Int): Fragment {
         var fragment: Fragment? = null

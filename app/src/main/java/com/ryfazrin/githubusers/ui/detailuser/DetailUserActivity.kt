@@ -20,8 +20,6 @@ import java.text.DecimalFormat
 
 class DetailUserActivity : AppCompatActivity() {
 
-//    private lateinit var getUser: String
-//    private lateinit var user: UserDetailResponse
     private lateinit var detailUserViewModel: DetailUserViewModel
     private lateinit var binding: ActivityDetailUserBinding
 
@@ -30,23 +28,17 @@ class DetailUserActivity : AppCompatActivity() {
         binding = ActivityDetailUserBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        detailUserViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(
-            DetailUserViewModel::class.java)
+        detailUserViewModel =
+            ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
+                .get(DetailUserViewModel::class.java)
 
-//        val imgUser: ImageView = findViewById(R.id.img_detail_user)
-//        val tvName: TextView = findViewById(R.id.tv_detail_name)
-//        val tvFollowers: TextView = findViewById(R.id.tv_detail_followers)
-//        val tvFollowing: TextView = findViewById(R.id.tv_detail_following)
-//        val tvLocation: TextView = findViewById(R.id.tv_detail_location)
-//        val tvCompany: TextView = findViewById(R.id.tv_detail_company)
-//        val tvRepository: TextView = findViewById(R.id.tv_detail_repository)
-
-        // user = intent.getParcelableExtra<Users>(EXTRA_USER) as Users
         val getUser: String = intent.getStringExtra(EXTRA_USER).toString()
 
         val sectionPagerAdapter = SectionDetailUserPagerAdapter(this@DetailUserActivity, getUser)
+
         val viewPager: ViewPager2 = binding.vpUserFollow
         viewPager.adapter = sectionPagerAdapter
+
         val tabs: TabLayout = binding.tlUserFollow
         TabLayoutMediator(tabs, viewPager) { tab, position ->
             tab.text = resources.getString(TAB_TITLES[position])
@@ -54,13 +46,6 @@ class DetailUserActivity : AppCompatActivity() {
 
         supportActionBar?.title = getUser
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-//        tvName.text = user.name
-//        tvFollowers.text = countViews(user.followers.toLong())
-//        tvFollowing.text = countViews(user.following.toLong())
-//        tvLocation.text = user.location
-//        tvCompany.text = user.company
-//        tvRepository.text = user.repository
 
         detailUserViewModel.findUser(getUser)
 
@@ -72,8 +57,6 @@ class DetailUserActivity : AppCompatActivity() {
             showLoading(it)
         })
     }
-
-    // findUser() { }
 
     private fun setUserData(user: UserDetailResponse) {
         Glide.with(this)

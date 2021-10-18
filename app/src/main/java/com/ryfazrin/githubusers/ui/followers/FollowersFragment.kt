@@ -19,7 +19,6 @@ class FollowersFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-//        return inflater.inflate(R.layout.fragment_followers, container, false)
         binding = FragmentFollowersBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -41,8 +40,6 @@ class FollowersFragment : Fragment() {
         })
     }
 
-    // showListFollowers()
-
     private fun setFollowerData(users: List<Users>) {
         val listFollower = ArrayList<Users>()
         for (user in users) {
@@ -50,13 +47,9 @@ class FollowersFragment : Fragment() {
         }
 
         binding.rvFollowers.apply {
-            layoutManager = LinearLayoutManager(requireContext()) // activity or requireContext()
+            layoutManager = LinearLayoutManager(requireContext())
             adapter = FollowAdapter(listFollower)
-//            adapter = ListUserAdapter(listFollower)
         }
-//        val adapter = FollowerAdapter(listFollower)
-//        binding.rvFollowers.adapter = adapter
-//        binding.rvFollowers.layoutManager = LinearLayoutManager(requireContext())
     }
 
     private fun showLoading(isLoading: Boolean) {

@@ -18,15 +18,15 @@ class FollowAdapter(private val listFollowers: ArrayList<Users>) : RecyclerView.
         val tvFollowType: TextView = itemView.findViewById(R.id.tv_follow_type)
     }
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): ViewHolder {
-        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_row_follow, parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view: View =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_row_follow, parent, false)
+        return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val (login, avatar_url, type) = listFollowers[position]
+
         Glide.with(holder.itemView.context)
             .load(avatar_url)
             .circleCrop()

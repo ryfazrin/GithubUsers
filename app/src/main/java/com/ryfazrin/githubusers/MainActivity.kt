@@ -58,42 +58,33 @@ class MainActivity : AppCompatActivity() {
 
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
         searchView.queryHint = resources.getString(R.string.search)
+
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            /*
-             Gunakan method ini ketika search selesai atau OK
-             */
+
             override fun onQueryTextSubmit(query: String): Boolean {
                 mainViewModel.showSearchUser(query)
                 return true
             }
 
-            /*
-             Gunakan method ini untuk merespon tiap perubahan huruf pada SearchView
-             */
             override fun onQueryTextChange(newText: String?): Boolean {
                 return false
             }
+
         })
 
         return true
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            // Check if user triggered a refresh:
             R.id.refresh -> {
                 mainViewModel.showFirstListUsers()
                 return true
             }
         }
-        // User didn't trigger a refresh, let the superclass handle this action
+
         return super.onOptionsItemSelected(item)
     }
-
-    // showSearchUser() { }
-
-    // showFirstListUsers() { }
 
     private fun setUserData(users: List<Users>) {
         val listUser = ArrayList<Users>()
@@ -114,8 +105,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun showSelectedUser(user: Users) {
         val moveDetailIntent = Intent(this@MainActivity, DetailUserActivity::class.java)
-        // moveDetailIntent.putExtra(DetailUserActivity.EXTRA_USER, user)
         moveDetailIntent.putExtra(DetailUserActivity.EXTRA_USER, user.login)
+
         startActivity(moveDetailIntent)
     }
 
@@ -133,9 +124,5 @@ class MainActivity : AppCompatActivity() {
         } else {
             binding.errorMessage.visibility = View.GONE
         }
-    }
-
-    companion object {
-        private const val TAG = "MainActivity"
     }
 }

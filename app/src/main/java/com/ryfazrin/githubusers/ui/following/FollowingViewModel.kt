@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ryfazrin.githubusers.Users
-import com.ryfazrin.githubusers.api.ApiConfig
+import com.ryfazrin.githubusers.API.ApiConfig
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -19,7 +19,6 @@ class FollowingViewModel : ViewModel() {
     val isLoading: LiveData<Boolean> = _isLoading
 
     fun showListFollowing(getUser: String) {
-//        val data = requireArguments().getString(FollowingFragment.EXTRA_USER).toString()
         _isLoading.value = true
         val client = ApiConfig.getApiService().getDetailFollowing(getUser)
         client.enqueue(object : Callback<List<Users>> {
@@ -29,7 +28,6 @@ class FollowingViewModel : ViewModel() {
                     val responseBody = response.body()
                     if (responseBody != null) {
                         _users.value = responseBody
-//                        setFollowingData(responseBody)
                     }
                 }
             }

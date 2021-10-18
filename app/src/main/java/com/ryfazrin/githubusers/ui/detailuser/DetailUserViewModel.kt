@@ -4,22 +4,19 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.ryfazrin.githubusers.api.ApiConfig
+import com.ryfazrin.githubusers.API.ApiConfig
 import com.ryfazrin.githubusers.UserDetailResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class DetailUserViewModel : ViewModel() {
+
     private val _user = MutableLiveData<UserDetailResponse>()
     val user: LiveData<UserDetailResponse> = _user
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
-
-//    init {
-//
-//    }
 
     fun findUser(getUser: String) {
         _isLoading.value = true
@@ -33,7 +30,6 @@ class DetailUserViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null) {
-//                        setUserData(responseBody)
                         _user.value = responseBody
                     }
                 }
