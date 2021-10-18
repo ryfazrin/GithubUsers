@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ryfazrin.githubusers.API.ApiConfig
 import com.ryfazrin.githubusers.databinding.FragmentFollowersBinding
@@ -24,38 +25,22 @@ class FollowersFragment : Fragment() {
 //        return inflater.inflate(R.layout.fragment_followers, container, false)
         binding = FragmentFollowersBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        showRecyclerFollowers()
-    }
 
-    private fun showRecyclerFollowers() {
+        val followersViewModel = ViewModelProvider(this).get(FollowersViewModel::class.java)
 
-        val data = requireArguments().getString(EXTRA_USER).toString()
+        val getUser: String = requireArguments().getString(EXTRA_USER).toString()
 
-        // test ambil data
-//        Log.d("fragmentfollow", "Tes: ${data}")
-//        binding.testText.text = data
-        // val client = ApiConfig.getApiService().getDetailFollowers(DetailUserActivity.EXTRA_USER)
-        val client = ApiConfig.getApiService().getDetailFollowers(data)
-        client.enqueue(object : Callback<List<Users>> {
-            override fun onResponse(call: Call<List<Users>>, response: Response<List<Users>>) {
-                if (response.isSuccessful) {
-                    val responseBody = response.body()
-                    if (responseBody != null) {
-                        setFollowerData(responseBody)
-                    }
-                }
-            }
-
-            override fun onFailure(call: Call<List<Users>>, t: Throwable) {
-                Log.e(TAG, "onFailure: ${t.message}")
-            }
+        followersViewModel.showListFollowers(getUser)
+        followersViewModel.users.observe(viewLifecycleOwner, { user ->
+            setFollowerData(user)
         })
     }
+
+    // showListFollowers()
 
     private fun setFollowerData(users: List<Users>) {
         val listFollower = ArrayList<Users>()
@@ -76,7 +61,6 @@ class FollowersFragment : Fragment() {
 
     companion object {
         const val EXTRA_USER = "extra_user"
-        private const val TAG = "FollowersFragment"
         private const val ARG_SECTION_NUMBER = "section_number"
 
         @JvmStatic
