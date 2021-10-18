@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ryfazrin.githubusers.API.ApiConfig
 import com.ryfazrin.githubusers.databinding.FragmentFollowingBinding
@@ -28,28 +29,18 @@ class FollowingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        showRecyclerFollowing()
-    }
 
-    private fun showRecyclerFollowing() {
+        val followingViewModel = ViewModelProvider(this).get(FollowingViewModel::class.java)
 
-        val data = requireArguments().getString(FollowingFragment.EXTRA_USER).toString()
-        val client = ApiConfig.getApiService().getDetailFollowing(data)
-        client.enqueue(object : Callback<List<Users>> {
-            override fun onResponse(call: Call<List<Users>>, response: Response<List<Users>>) {
-                if (response.isSuccessful) {
-                    val responseBody = response.body()
-                    if (responseBody != null) {
-                        setFollowingData(responseBody)
-                    }
-                }
-            }
+        val getUser: String = requireArguments().getString(FollowersFragment.EXTRA_USER).toString()
 
-            override fun onFailure(call: Call<List<Users>>, t: Throwable) {
-                Log.e(TAG, "onFailure: ${t.message}")
-            }
+        followingViewModel.showListFollowing(getUser)
+        followingViewModel.users.observe(viewLifecycleOwner, { user ->
+            setFollowingData(user)
         })
     }
+
+    // showListFollowing() {}
 
     private fun setFollowingData(users: List<Users>) {
         val listFollowing = ArrayList<Users>()
@@ -68,7 +59,6 @@ class FollowingFragment : Fragment() {
 
     companion object {
         const val EXTRA_USER = "extra_user"
-        private const val TAG = "FollowingFragment"
         private const val ARG_SECTION_NUMBER = "section_number"
 
         @JvmStatic
