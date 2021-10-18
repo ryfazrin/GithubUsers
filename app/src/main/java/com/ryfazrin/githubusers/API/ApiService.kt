@@ -31,4 +31,10 @@ interface ApiService {
     fun getDetailFollowers(
         @Path("login") login: String
     ): Call<List<Users>>
+
+    @Headers("Authorization: token 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")
+    @GET("users/{login}/following")
+    fun getDetailFollowing(
+        @Path("login") login: String
+    ): Call<List<Users>>
 }
