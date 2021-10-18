@@ -1,5 +1,6 @@
 package com.ryfazrin.githubusers
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -20,7 +21,8 @@ import retrofit2.Response
 
 class DetailUserActivity : AppCompatActivity() {
 
-    private lateinit var user: String
+    private lateinit var getUser: String
+    private lateinit var user: UserDetailResponse
     private lateinit var binding: ActivityDetailUserBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,12 +39,17 @@ class DetailUserActivity : AppCompatActivity() {
 //        val tvRepository: TextView = findViewById(R.id.tv_detail_repository)
 
         // user = intent.getParcelableExtra<Users>(EXTRA_USER) as Users
-        user = intent.getStringExtra(EXTRA_USER).toString()
+        getUser = intent.getStringExtra(EXTRA_USER).toString()
+
+//        val mFollowersFragment = FollowersFragment()
+//        val mBundle = Bundle()
+//        mBundle.putString(FollowersFragment.EXTRA_USER, user)
+//        mFollowersFragment.arguments = mBundle
 
 //        Log.e(TAG, "onResponse Detail: ${user.login}")
 //        Log.e(TAG, "onResponse Detail: ${user}")
 
-        val sectionPagerAdapter = SectionDetailUserPagerAdapter(this@DetailUserActivity)
+        val sectionPagerAdapter = SectionDetailUserPagerAdapter(this@DetailUserActivity, getUser)
         val viewPager: ViewPager2 = binding.vpUserFollow
         viewPager.adapter = sectionPagerAdapter
         val tabs: TabLayout = binding.tlUserFollow
@@ -50,7 +57,7 @@ class DetailUserActivity : AppCompatActivity() {
             tab.text = resources.getString(TAB_TITLES[position])
         }.attach()
 
-        supportActionBar?.title = user
+        supportActionBar?.title = getUser
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
 //        tvName.text = user.name
@@ -65,7 +72,7 @@ class DetailUserActivity : AppCompatActivity() {
 
     private fun findUser() {
         showLoading(true)
-        val client = ApiConfig.getApiService().getDetailUser(user)
+        val client = ApiConfig.getApiService().getDetailUser(getUser)
         client.enqueue(object : Callback<UserDetailResponse> {
             override fun onResponse(
                 call: Call<UserDetailResponse>,
@@ -75,7 +82,9 @@ class DetailUserActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null) {
-                        setUserData(responseBody)
+//                        setUserData(responseBody)
+                        user = responseBody
+                        setUserData(user)
                     }
                 }
             }
@@ -113,13 +122,13 @@ class DetailUserActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.share -> {
-//                val sendData = "Github User's\n\nName: ${user.name}\n\nUsername: ${user.username}\n\nCompany: ${user.company}"
+                val sendData = "Github User's\n\nName: ${user.name}\n\nUsername: ${user.login}\n\nCompany: ${user.company}"
 
-//                val intent = Intent()
-//                intent.action = Intent.ACTION_SEND
-//                intent.putExtra(Intent.EXTRA_TEXT, sendData)
-//                intent.type="text/plain"
-//                startActivity(Intent.createChooser(intent,"Share ${user.username} Github Profile :"))
+                val intent = Intent()
+                intent.action = Intent.ACTION_SEND
+                intent.putExtra(Intent.EXTRA_TEXT, sendData)
+                intent.type="text/plain"
+                startActivity(Intent.createChooser(intent,"Share ${user.login} Github Profile :"))
             }
         }
         return super.onOptionsItemSelected(item)

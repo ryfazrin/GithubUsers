@@ -18,7 +18,6 @@ import java.util.zip.Inflater
 class FollowersFragment : Fragment() {
 
     private lateinit var binding: FragmentFollowersBinding
-    private lateinit var user: List<Users>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,14 +39,19 @@ class FollowersFragment : Fragment() {
     }
 
     private fun showRecyclerFollowers() {
+
+        val data = requireArguments().getString(EXTRA_USER).toString()
+
+        // test ambil data
+        Log.d("fragmentfollow", "Tes: ${data}")
+//        binding.testText.text = data
         // val client = ApiConfig.getApiService().getDetailFollowers(DetailUserActivity.EXTRA_USER)
-        val client = ApiConfig.getApiService().getDetailFollowers("mojombo") // sengaja menggunakan statik username, mencoba menampilkan datanya dahulu
+        val client = ApiConfig.getApiService().getDetailFollowers(data)
         client.enqueue(object : Callback<List<Users>> {
             override fun onResponse(call: Call<List<Users>>, response: Response<List<Users>>) {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null) {
-                        Log.e(TAG, "onResponse: $responseBody")
                         setFollowerData(responseBody)
                     }
                 }
@@ -67,8 +71,8 @@ class FollowersFragment : Fragment() {
 
         binding.rvFollowers.apply {
             layoutManager = LinearLayoutManager(requireContext()) // activity or requireContext()
-//            adapter = FollowerAdapter(listFollower)
-            adapter = ListUserAdapter(listFollower)
+            adapter = FollowerAdapter(listFollower)
+//            adapter = ListUserAdapter(listFollower)
         }
 //        val adapter = FollowerAdapter(listFollower)
 //        binding.rvFollowers.adapter = adapter
@@ -82,10 +86,11 @@ class FollowersFragment : Fragment() {
         private const val ARG_SECTION_NUMBER = "section_number"
 
         @JvmStatic
-        fun newInstance(index: Int) =
+        fun newInstance(index: Int, string: String) =
             FollowersFragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_SECTION_NUMBER, index)
+                    putString(EXTRA_USER, string)
                 }
             }
     }
