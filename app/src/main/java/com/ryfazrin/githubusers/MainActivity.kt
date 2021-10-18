@@ -134,6 +134,7 @@ class MainActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null) {
+                        showError(false)
                         setUserData(responseBody)
                     }
                 }
@@ -141,6 +142,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<List<Users>>, t: Throwable) {
                 showLoading(false)
+                showError(true)
                 Log.e(TAG, "onFailure: ${t.message}")
             }
 
@@ -176,6 +178,14 @@ class MainActivity : AppCompatActivity() {
             binding.progressBar.visibility = View.VISIBLE
         } else {
             binding.progressBar.visibility = View.GONE
+        }
+    }
+
+    private fun showError(isLoading: Boolean) {
+        if (isLoading) {
+            binding.errorMessage.visibility = View.VISIBLE
+        } else {
+            binding.errorMessage.visibility = View.GONE
         }
     }
 
