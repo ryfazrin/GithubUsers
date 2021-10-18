@@ -1,71 +1,128 @@
 package com.ryfazrin.githubusers
 
+import android.app.SearchManager
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.ryfazrin.githubusers.adapter.ListUserAdapter
+import com.ryfazrin.githubusers.databinding.ActivityMainBinding
+import com.ryfazrin.githubusers.ui.detailuser.DetailUserActivity
+import com.ryfazrin.githubusers.ui.main.MainViewModel
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var rvUser: RecyclerView
-    private val list = ArrayList<User>()
+    private lateinit var mainViewModel: MainViewModel
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        rvUser = findViewById(R.id.rv_user)
-        rvUser.setHasFixedSize(true)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        list.addAll(listUser)
-        showRecyclerList()
+        mainViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(
+            MainViewModel::class.java)
+        mainViewModel.users.observe(this, { user ->
+            setUserData(user)
+        })
+
+        val layoutManager = LinearLayoutManager(this)
+        binding.rvUser.layoutManager = layoutManager
+
+        val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
+        binding.rvUser.addItemDecoration(itemDecoration)
+
+        mainViewModel.isLoading.observe(this, {
+            showLoading(it)
+        })
+
+        mainViewModel.isMessage.observe(this, {
+            showError(it)
+        })
     }
 
-    private val listUser: ArrayList<User>
-        get() {
-            val dataName = resources.getStringArray(R.array.name)
-            val dataUsername = resources.getStringArray(R.array.username)
-            val dataLocation = resources.getStringArray(R.array.location)
-            val dataAvatar = resources.obtainTypedArray(R.array.avatar)
-            dataAvatar.recycle()
-            val dataRepository = resources.getStringArray(R.array.repository)
-            val dataCompany = resources.getStringArray(R.array.company)
-            val dataFollowers = resources.getStringArray(R.array.followers)
-            val dataFollowing = resources.getStringArray(R.array.following)
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
 
-            val listUser = ArrayList<User>()
-            for (i in dataName.indices) {
-                val user = User(
-                    name = dataName[i],
-                    username = dataUsername[i],
-                    location = dataLocation[i],
-                    avatar = dataAvatar.getResourceId(i, -1),
-                    repository = dataRepository[i],
-                    company = dataCompany[i],
-                    followers = dataFollowers[i],
-                    following = dataFollowing[i]
-                )
-                listUser.add(user)
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchView = menu?.findItem(R.id.search)?.actionView as SearchView
+
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        searchView.queryHint = resources.getString(R.string.search)
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+            override fun onQueryTextSubmit(query: String): Boolean {
+                mainViewModel.showSearchUser(query)
+                return true
             }
-            return listUser
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+
+        })
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.refresh -> {
+                mainViewModel.showFirstListUsers()
+                return true
+            }
         }
 
-    private fun showRecyclerList() {
-        rvUser.layoutManager = LinearLayoutManager(this)
-        val listUserAdapter = ListUserAdapter(list)
-        rvUser.adapter = listUserAdapter
+        return super.onOptionsItemSelected(item)
+    }
 
-        listUserAdapter.setOnItemClickCallback(object : ListUserAdapter.OnItemCLickCallback {
-            override fun onItemClicked(data: User) {
+    private fun setUserData(users: List<Users>) {
+        val listUser = ArrayList<Users>()
+        listUser.clear()
+        for (user in users) {
+            listUser.add(user)
+        }
+
+        val adapter = ListUserAdapter(listUser)
+        binding.rvUser.adapter = adapter
+
+        adapter.setOnItemClickCallback(object : ListUserAdapter.OnItemCLickCallback {
+            override fun onItemClicked(data: Users) {
                 showSelectedUser(data)
             }
         })
     }
 
-    private fun showSelectedUser(user: User) {
+    private fun showSelectedUser(user: Users) {
         val moveDetailIntent = Intent(this@MainActivity, DetailUserActivity::class.java)
-        moveDetailIntent.putExtra(DetailUserActivity.EXTRA_USER, user)
+        moveDetailIntent.putExtra(DetailUserActivity.EXTRA_USER, user.login)
+
         startActivity(moveDetailIntent)
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading) {
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.visibility = View.GONE
+        }
+    }
+
+    private fun showError(isMessage: Boolean) {
+        if (isMessage) {
+            binding.errorMessage.visibility = View.VISIBLE
+        } else {
+            binding.errorMessage.visibility = View.GONE
+        }
     }
 }
