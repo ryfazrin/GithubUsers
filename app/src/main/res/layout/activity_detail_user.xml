@@ -10,11 +10,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            android:padding="16dp">
+            android:layout_marginBottom="4dp">
 
                 <ProgressBar
                     android:id="@+id/progress_bar"
@@ -32,9 +29,11 @@
                     android:id="@+id/img_detail_user"
                     android:layout_width="140dp"
                     android:layout_height="140dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:contentDescription="@string/detail_name"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:contentDescription="@string/detail_name"
                     tools:srcCompat="@tools:sample/avatars" />
 
                 <TextView
@@ -54,7 +53,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="@string/followers"
+                    android:text="@string/zero_number"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/tv_detail_name"
@@ -76,7 +75,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="@string/following"
+                    android:text="@string/zero_number"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/tv_detail_followers"
@@ -116,6 +115,7 @@
                     android:id="@+id/text_company"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:text="@string/company"
                     android:textSize="16sp"
@@ -124,12 +124,14 @@
 
                 <TextView
                     android:id="@+id/tv_detail_company"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/company"
                     android:textAlignment="textEnd"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:text="@string/company"
                     app:layout_constraintBottom_toBottomOf="@+id/text_company"
                     app:layout_constraintEnd_toEndOf="@+id/diver_1"
                     app:layout_constraintHorizontal_bias="1.0"
@@ -148,6 +150,7 @@
                     android:id="@+id/text_repositories"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:text="@string/repositories"
                     android:textSize="16sp"
@@ -158,9 +161,10 @@
                     android:id="@+id/tv_detail_repository"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/zero_number"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:text="@string/repositories"
                     app:layout_constraintBottom_toBottomOf="@+id/text_repositories"
                     app:layout_constraintEnd_toEndOf="@+id/diver_2"
                     app:layout_constraintHorizontal_bias="1.0"
