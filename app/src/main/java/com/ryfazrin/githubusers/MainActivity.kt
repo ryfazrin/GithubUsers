@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -34,6 +35,10 @@ class MainActivity : AppCompatActivity() {
         val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
         binding.rvUser.addItemDecoration(itemDecoration)
 
+        binding.swipeRefresh.setOnRefreshListener {
+            showFirstListUsers()
+            binding.swipeRefresh.isRefreshing = false
+        }
         showFirstListUsers()
     }
 
@@ -64,6 +69,18 @@ class MainActivity : AppCompatActivity() {
 
         return true
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            // Check if user triggered a refresh:
+            R.id.refresh -> {
+                showFirstListUsers()
+                return true
+            }
+        }
+        // User didn't trigger a refresh, let the superclass handle this action
+        return super.onOptionsItemSelected(item)
     }
 
     private fun showSearchUser(query: String) {
