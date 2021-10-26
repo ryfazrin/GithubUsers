@@ -3,6 +3,7 @@ package com.ryfazrin.githubusers.database
 import androidx.lifecycle.LiveData
 import androidx.room.*
 
+@Dao
 interface UserFavoriteDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(userFavorite: UserFavorite)
