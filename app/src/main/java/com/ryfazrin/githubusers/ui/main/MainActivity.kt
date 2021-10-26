@@ -26,7 +26,7 @@ import com.ryfazrin.githubusers.ui.favorites.FavoritesActivity
 import com.ryfazrin.githubusers.ui.settings.*
 import kotlin.collections.ArrayList
 
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class MainActivity : AppCompatActivity() {
 
