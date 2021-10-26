@@ -29,7 +29,7 @@ class FollowingFragment : Fragment() {
 
         val followingViewModel = ViewModelProvider(this).get(FollowingViewModel::class.java)
 
-        val getUser: String = requireArguments().getString(FollowersFragment.EXTRA_USER).toString()
+        val getUser: String = requireArguments().getString(EXTRA_USER).toString()
 
         followingViewModel.showListFollowing(getUser)
         followingViewModel.users.observe(viewLifecycleOwner, { user ->
@@ -57,7 +57,7 @@ class FollowingFragment : Fragment() {
     }
 
     companion object {
-        const val EXTRA_USER = "extra_user"
+        private const val EXTRA_USER = "extra_user"
         private const val ARG_SECTION_NUMBER = "section_number"
 
         @JvmStatic

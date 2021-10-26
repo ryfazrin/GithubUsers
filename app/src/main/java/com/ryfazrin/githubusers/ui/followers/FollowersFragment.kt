@@ -56,7 +56,7 @@ class FollowersFragment : Fragment() {
     }
 
     companion object {
-        const val EXTRA_USER = "extra_user"
+        private const val EXTRA_USER = "extra_user"
         private const val ARG_SECTION_NUMBER = "section_number"
 
         @JvmStatic
