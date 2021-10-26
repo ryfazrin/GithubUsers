@@ -16,13 +16,20 @@
         app:showAsAction="always"/>
 
     <item
-        android:id="@+id/refresh"
-        android:icon="@drawable/ic_baseline_refresh_24"
-        android:title="@string/menu_refresh" />
+        android:icon="@drawable/ic_baseline_more_vert_24"
+        android:title="@string/settings"
+        app:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/refresh"
+                android:icon="@drawable/ic_baseline_refresh_24"
+                android:title="@string/menu_refresh" />
 
-    <item
-        android:id="@+id/settings"
-        android:icon="@drawable/ic_baseline_settings_24"
-        android:title="@string/settings" />
+            <item
+                android:id="@+id/settings"
+                android:icon="@drawable/ic_baseline_settings_24"
+                android:title="@string/settings" />
+        </menu>
+    </item>
 
 </menu>
