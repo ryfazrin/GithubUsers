@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ryfazrin.githubusers.R
 import com.ryfazrin.githubusers.Users
+import com.ryfazrin.githubusers.databinding.ItemRowFollowBinding
+import com.ryfazrin.githubusers.databinding.ItemRowUserBinding
 
 class ListUserAdapter(private val listUser: ArrayList<Users>) : RecyclerView.Adapter<ListUserAdapter.ListViewHolder>() {
 
@@ -18,27 +20,26 @@ class ListUserAdapter(private val listUser: ArrayList<Users>) : RecyclerView.Ada
         this.onItemClickCallback = onItemClickCallback
     }
 
-    class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var imgPhoto: ImageView = itemView.findViewById(R.id.img_item_photo)
-        var tvUsername: TextView = itemView.findViewById(R.id.tv_item_username)
-        var tvType: TextView = itemView.findViewById(R.id.tv_item_type)
+    inner class ListViewHolder(private val binding: ItemRowUserBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(users: Users) {
+            with(binding) {
+                Glide.with(itemView.context)
+                    .load(users.avatarUrl)
+                    .circleCrop()
+                    .into(imgItemPhoto)
+                tvItemUsername.text = users.login
+                tvItemType.text = users.type
+            }
+        }
     }
 
-    override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ListViewHolder {
-        val view: View =
-            LayoutInflater.from(viewGroup.context).inflate(R.layout.item_row_user, viewGroup, false)
-        return ListViewHolder(view)
+    override fun onCreateViewHolder(parent: ViewGroup, i: Int): ListViewHolder {
+        val binding = ItemRowUserBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ListViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        val (login, avatar_url, type) = listUser[position]
-
-        Glide.with(holder.itemView.context)
-            .load(avatar_url)
-            .circleCrop()
-            .into(holder.imgPhoto)
-        holder.tvUsername.text = login
-        holder.tvType.text = type
+        holder.bind(listUser[position])
 
         holder.itemView.setOnClickListener {
             onItemClickCallback.onItemClicked(listUser[holder.adapterPosition])
