@@ -1,4 +1,4 @@
-package com.ryfazrin.githubusers
+package com.ryfazrin.githubusers.ui.main
 
 import android.app.SearchManager
 import android.content.Context
@@ -12,10 +12,11 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ryfazrin.githubusers.R
+import com.ryfazrin.githubusers.Users
 import com.ryfazrin.githubusers.adapter.ListUserAdapter
 import com.ryfazrin.githubusers.databinding.ActivityMainBinding
 import com.ryfazrin.githubusers.ui.detailuser.DetailUserActivity
-import com.ryfazrin.githubusers.ui.main.MainViewModel
 import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
