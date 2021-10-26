@@ -1,4 +1,4 @@
-package com.ryfazrin.githubusers
+package com.ryfazrin.githubusers.ui.main
 
 import android.app.SearchManager
 import android.content.Context
@@ -12,10 +12,11 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ryfazrin.githubusers.R
+import com.ryfazrin.githubusers.Users
 import com.ryfazrin.githubusers.adapter.ListUserAdapter
 import com.ryfazrin.githubusers.databinding.ActivityMainBinding
 import com.ryfazrin.githubusers.ui.detailuser.DetailUserActivity
-import com.ryfazrin.githubusers.ui.main.MainViewModel
 import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
@@ -89,9 +90,8 @@ class MainActivity : AppCompatActivity() {
     private fun setUserData(users: List<Users>) {
         val listUser = ArrayList<Users>()
         listUser.clear()
-        for (user in users) {
-            listUser.add(user)
-        }
+
+        listUser.addAll(users)
 
         val adapter = ListUserAdapter(listUser)
         binding.rvUser.adapter = adapter
@@ -111,18 +111,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        if (isLoading) {
-            binding.progressBar.visibility = View.VISIBLE
-        } else {
-            binding.progressBar.visibility = View.GONE
-        }
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     private fun showError(isMessage: Boolean) {
-        if (isMessage) {
-            binding.errorMessage.visibility = View.VISIBLE
-        } else {
-            binding.errorMessage.visibility = View.GONE
-        }
+        binding.errorMessage.visibility = if (isMessage) View.VISIBLE else View.GONE
     }
 }

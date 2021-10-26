@@ -9,31 +9,31 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ryfazrin.githubusers.R
 import com.ryfazrin.githubusers.Users
+import com.ryfazrin.githubusers.databinding.ItemRowFollowBinding
 
-class FollowAdapter(private val listFollowers: ArrayList<Users>) : RecyclerView.Adapter<FollowAdapter.ViewHolder>() {
+class FollowAdapter(private val listFollow: ArrayList<Users>) : RecyclerView.Adapter<FollowAdapter.ViewHolder>() {
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val imgFollowPhoto: ImageView = itemView.findViewById(R.id.img_follow_photo)
-        val tvFollowUsername: TextView = itemView.findViewById(R.id.tv_follow_username)
-        val tvFollowType: TextView = itemView.findViewById(R.id.tv_follow_type)
+    inner class ViewHolder(private val binding: ItemRowFollowBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(users: Users) {
+            with(binding) {
+                Glide.with(itemView.context)
+                    .load(users.avatarUrl)
+                    .circleCrop()
+                    .into(imgFollowPhoto)
+                tvFollowUsername.text = users.login
+                tvFollowType.text = users.type
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view: View =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_row_follow, parent, false)
-        return ViewHolder(view)
+        val binding = ItemRowFollowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val (login, avatar_url, type) = listFollowers[position]
-
-        Glide.with(holder.itemView.context)
-            .load(avatar_url)
-            .circleCrop()
-            .into(holder.imgFollowPhoto)
-        holder.tvFollowUsername.text = login
-        holder.tvFollowType.text = type
+        holder.bind(listFollow[position])
     }
 
-    override fun getItemCount(): Int = listFollowers.size
+    override fun getItemCount(): Int = listFollow.size
 }

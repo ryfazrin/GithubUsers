@@ -2,7 +2,7 @@ package com.ryfazrin.githubusers
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class UserDetailResponse(
@@ -45,12 +45,6 @@ data class Users(
 
 @Parcelize
 data class UsersSearch(
-	@field:SerializedName("total_count")
-	val totalCount: Int,
-
-	@field:SerializedName("incomplete_results")
-	val incompleteResults: Boolean,
-
 	@field:SerializedName("items")
 	val items: List<Users>
 ) : Parcelable

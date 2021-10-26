@@ -42,9 +42,8 @@ class FollowersFragment : Fragment() {
 
     private fun setFollowerData(users: List<Users>) {
         val listFollower = ArrayList<Users>()
-        for (user in users) {
-            listFollower.add(user)
-        }
+
+        listFollower.addAll(users)
 
         binding.rvFollowers.apply {
             layoutManager = LinearLayoutManager(requireContext())
@@ -53,15 +52,11 @@ class FollowersFragment : Fragment() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        if (isLoading) {
-            binding.progressBar.visibility = View.VISIBLE
-        } else {
-            binding.progressBar.visibility = View.GONE
-        }
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     companion object {
-        const val EXTRA_USER = "extra_user"
+        private const val EXTRA_USER = "extra_user"
         private const val ARG_SECTION_NUMBER = "section_number"
 
         @JvmStatic
