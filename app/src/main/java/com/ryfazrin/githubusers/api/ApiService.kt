@@ -1,4 +1,4 @@
-package com.ryfazrin.githubusers.API
+package com.ryfazrin.githubusers.api
 
 import com.ryfazrin.githubusers.UserDetailResponse
 import com.ryfazrin.githubusers.Users

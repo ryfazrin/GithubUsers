@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.ryfazrin.githubusers.API.ApiConfig
+import com.ryfazrin.githubusers.api.ApiConfig
 import com.ryfazrin.githubusers.UserDetailResponse
 import retrofit2.Call
 import retrofit2.Callback
