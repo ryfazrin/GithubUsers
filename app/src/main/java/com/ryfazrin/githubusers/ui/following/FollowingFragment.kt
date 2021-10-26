@@ -43,9 +43,8 @@ class FollowingFragment : Fragment() {
 
     private fun setFollowingData(users: List<Users>) {
         val listFollowing = ArrayList<Users>()
-        for (user in users) {
-            listFollowing.add(user)
-        }
+
+        listFollowing.addAll(users)
 
         binding.rvFollowing.apply {
             layoutManager = LinearLayoutManager(requireContext()) // activity or requireContext()

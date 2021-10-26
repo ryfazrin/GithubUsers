@@ -89,9 +89,8 @@ class MainActivity : AppCompatActivity() {
     private fun setUserData(users: List<Users>) {
         val listUser = ArrayList<Users>()
         listUser.clear()
-        for (user in users) {
-            listUser.add(user)
-        }
+
+        listUser.addAll(users)
 
         val adapter = ListUserAdapter(listUser)
         binding.rvUser.adapter = adapter
