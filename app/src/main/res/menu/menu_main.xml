@@ -10,7 +10,7 @@
         app:showAsAction="collapseActionView|always" />
 
     <item
-        android:id="@+id/favorte"
+        android:id="@+id/favorite_users"
         android:icon="@drawable/ic_baseline_favorite_24"
         android:title="@string/favorite_users"
         app:showAsAction="always"/>
