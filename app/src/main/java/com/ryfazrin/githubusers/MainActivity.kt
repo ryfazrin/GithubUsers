@@ -111,18 +111,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        if (isLoading) {
-            binding.progressBar.visibility = View.VISIBLE
-        } else {
-            binding.progressBar.visibility = View.GONE
-        }
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     private fun showError(isMessage: Boolean) {
-        if (isMessage) {
-            binding.errorMessage.visibility = View.VISIBLE
-        } else {
-            binding.errorMessage.visibility = View.GONE
-        }
+        binding.errorMessage.visibility = if (isMessage) View.VISIBLE else View.GONE
     }
 }
