@@ -12,7 +12,9 @@
     <string name="repositories">Repositories</string>
     <string name="search">Search username…</string>
     <string name="zero_number">0</string>
-    <string name="menu_refresh">refresh</string>
+    <string name="menu_refresh">Refresh</string>
     <string name="refresh_message">Check Your Connection - Try Refresh</string>
     <string name="github_type">Github Type</string>
+    <string name="settings">Settings</string>
+    <string name="favorite_users">Favorite User\'s</string>
 </resources>
