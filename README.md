@@ -26,6 +26,8 @@ Menggunakan library networking Retrofit.
 
 Mengimplementasikan Room untuk menyimpan data ke dalam daftar favorite.
 
+Ketika User ditambahkan ke favorite, tombol Fab Tambah akan hilang dan menampilkan fab Hapus dari favorite. Sebaliknya.
+
 Menggunakan DataStore untuk penyimpanan pengaturan tema.
 
 Menerapkan Android Architecture Component yaitu ViewModel dan LiveData.
