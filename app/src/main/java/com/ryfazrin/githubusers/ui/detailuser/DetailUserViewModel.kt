@@ -35,7 +35,7 @@ class DetailUserViewModel(application: Application) : ViewModel() {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null) {
-                        _user.value = responseBody
+                        _user.value = responseBody!!
                     }
                 }
             }
@@ -47,6 +47,8 @@ class DetailUserViewModel(application: Application) : ViewModel() {
 
         })
     }
+
+    fun getUserFavoriteById(login: String): LiveData<List<UserFavorite>> = mUserFavoriteRepository.getUserFavoriteById(login)
 
     fun insertFavorite(userFavorite: UserFavorite) {
         mUserFavoriteRepository.insert(userFavorite)

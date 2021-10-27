@@ -19,6 +19,8 @@ class UserFavoriteRepository(application: Application) {
 
     fun getAllUserFavorite(): LiveData<List<UserFavorite>> = mUserFavoriteDao.getAllUserFavorite()
 
+    fun getUserFavoriteById(login: String): LiveData<List<UserFavorite>> = mUserFavoriteDao.getUserFavoriteById(login)
+
     fun insert(userFavorite: UserFavorite) {
         executorService.execute { mUserFavoriteDao.insert(userFavorite) }
     }

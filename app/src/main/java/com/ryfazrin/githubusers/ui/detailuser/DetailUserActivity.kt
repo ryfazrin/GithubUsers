@@ -1,6 +1,9 @@
 package com.ryfazrin.githubusers.ui.detailuser
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -65,6 +68,7 @@ class DetailUserActivity : AppCompatActivity() {
         })
     }
 
+    @SuppressLint("ResourceAsColor")
     private fun setUserData(user: UserDetailResponse) {
 
         Glide.with(this)
@@ -77,15 +81,26 @@ class DetailUserActivity : AppCompatActivity() {
         binding.tvDetailCompany.text = user.company
         binding.tvDetailRepository.text = countViews(user.publicRepos.toLong())
 
-        binding.fabAdd.setOnClickListener {
-            userFavorite.login = user.login
-            userFavorite.avatar = user.avatarUrl
-            userFavorite.type = user.type
+        detailUserViewModel.getUserFavoriteById(user.login).observe(this, {
+            if (it.isNotEmpty()) {
+                binding.fabAdd.setImageDrawable(getDrawable(R.drawable.ic_baseline_favorite_24))
+                binding.fabAdd.setColorFilter(Color.RED)
+                binding.fabAdd.backgroundTintList = ColorStateList.valueOf(Color.WHITE)
+                
+            } else {
+                binding.fabAdd.setOnClickListener {
+                    userFavorite.login = user.login
+                    userFavorite.avatar = user.avatarUrl
+                    userFavorite.type = user.type
 
-            detailUserViewModel.insertFavorite(userFavorite)
-            Log.e("Test database", "setUserData: $userFavorite")
-            Toast.makeText(this, "Berhasil ditambahkan ke favorite", Toast.LENGTH_SHORT).show()
-        }
+                    detailUserViewModel.insertFavorite(userFavorite)
+
+                    Toast.makeText(this, "Berhasil ditambahkan ke favorite", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            Log.e("Test database", "getUserFavoriteById: ${it.size}")
+        })
     }
 
     override fun onSupportNavigateUp(): Boolean {
