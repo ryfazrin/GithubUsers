@@ -1,6 +1,5 @@
 package com.ryfazrin.githubusers.ui.settings
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.CompoundButton
