@@ -3,7 +3,7 @@ package com.ryfazrin.githubusers.helper
 import androidx.recyclerview.widget.DiffUtil
 import com.ryfazrin.githubusers.database.UserFavorite
 
-class NoteDiffCallback(private val mOldUserFavorite: List<UserFavorite>, private val mNewUserFavorite: List<UserFavorite>) : DiffUtil.Callback() {
+class FavoriteDiffCallback(private val mOldUserFavorite: List<UserFavorite>, private val mNewUserFavorite: List<UserFavorite>) : DiffUtil.Callback() {
     override fun getOldListSize(): Int {
         return mOldUserFavorite.size
     }

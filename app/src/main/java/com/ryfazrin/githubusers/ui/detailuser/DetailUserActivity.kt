@@ -82,7 +82,6 @@ class DetailUserActivity : AppCompatActivity() {
         binding.tvDetailRepository.text = countViews(user.publicRepos.toLong())
 
         detailUserViewModel.getUserFavoriteById(user.login).observe(this, {
-
             if (it.isNotEmpty()) {
                 with(binding.fabAdd) {
                     setImageDrawable(getDrawable(R.drawable.ic_baseline_favorite_24))
@@ -113,8 +112,6 @@ class DetailUserActivity : AppCompatActivity() {
                     }
                 }
             }
-
-            Log.e("Test database", "getUserFavoriteById: ${it.size}")
         })
     }
 

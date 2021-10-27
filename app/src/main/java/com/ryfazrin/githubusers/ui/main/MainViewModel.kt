@@ -36,7 +36,7 @@ class MainViewModel : ViewModel() {
                     val responseBody = response.body()
                     if (responseBody != null) {
                         _isMessage.value = false
-                        _users.value = responseBody
+                        _users.value = responseBody!!
                     }
                 }
             }

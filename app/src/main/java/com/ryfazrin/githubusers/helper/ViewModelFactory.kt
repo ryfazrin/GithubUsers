@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.ryfazrin.githubusers.ui.detailuser.DetailUserViewModel
 import com.ryfazrin.githubusers.ui.favorites.FavoritesViewModel
-import com.ryfazrin.githubusers.ui.main.MainViewModel
 
 class ViewModelFactory private constructor(private val mApplication: Application) : ViewModelProvider.NewInstanceFactory() {
     companion object {

@@ -3,12 +3,11 @@ package com.ryfazrin.githubusers.ui.favorites
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ryfazrin.githubusers.R
-import com.ryfazrin.githubusers.Users
 import com.ryfazrin.githubusers.adapter.FavoriteAdapter
-import com.ryfazrin.githubusers.adapter.ListUserAdapter
 import com.ryfazrin.githubusers.database.UserFavorite
 import com.ryfazrin.githubusers.databinding.ActivityFavoritesBinding
 import com.ryfazrin.githubusers.helper.ViewModelFactory
@@ -36,7 +35,13 @@ class FavoritesActivity : AppCompatActivity() {
         binding.rvFavorites.layoutManager = layoutManager
 
         favoriteViewModel.getAllUserFavorite().observe(this, { userFavoriteList ->
-            setFavoriteData(userFavoriteList)
+            if (userFavoriteList.isNotEmpty()) {
+                binding.emptyUser.visibility = View.GONE
+                setFavoriteData(userFavoriteList)
+            } else {
+                binding.emptyUser.visibility = View.VISIBLE
+                setFavoriteData(userFavoriteList)
+            }
         })
     }
 

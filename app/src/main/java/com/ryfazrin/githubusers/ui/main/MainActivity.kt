@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
 import androidx.datastore.core.DataStore
@@ -71,10 +70,6 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.isMessage.observe(this, {
             showError(it)
         })
-
-//        mainViewModel.isToast.observe(this, {
-//            showToast(it)
-//        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -151,8 +146,4 @@ class MainActivity : AppCompatActivity() {
     private fun showError(isMessage: Boolean) {
         binding.errorMessage.visibility = if (isMessage) View.VISIBLE else View.GONE
     }
-
-//    private fun showToast(show: Boolean) {
-//        Toast.makeText(this, "User Tidak ditemukan", Toast.LENGTH_SHORT).show()
-//    }
 }

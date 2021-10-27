@@ -16,4 +16,18 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/item_row_user" />
 
+    <TextView
+        android:id="@+id/empty_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:text="Don't have favorite User"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
