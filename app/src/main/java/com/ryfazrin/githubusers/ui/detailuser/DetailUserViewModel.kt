@@ -54,6 +54,10 @@ class DetailUserViewModel(application: Application) : ViewModel() {
         mUserFavoriteRepository.insert(userFavorite)
     }
 
+    fun deleteFavorite(userFavorite: UserFavorite) {
+        mUserFavoriteRepository.delete(userFavorite)
+    }
+
     companion object {
         private const val TAG = "DetailUserActivity"
     }

@@ -8,9 +8,6 @@ interface UserFavoriteDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(userFavorite: UserFavorite)
 
-    @Update
-    fun update(userFavorite: UserFavorite)
-
     @Delete
     fun delete(userFavorite: UserFavorite)
 

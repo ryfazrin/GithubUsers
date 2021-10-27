@@ -68,7 +68,7 @@ class DetailUserActivity : AppCompatActivity() {
         })
     }
 
-    @SuppressLint("ResourceAsColor")
+    @SuppressLint("UseCompatLoadingForDrawables")
     private fun setUserData(user: UserDetailResponse) {
 
         Glide.with(this)
@@ -82,20 +82,35 @@ class DetailUserActivity : AppCompatActivity() {
         binding.tvDetailRepository.text = countViews(user.publicRepos.toLong())
 
         detailUserViewModel.getUserFavoriteById(user.login).observe(this, {
+
             if (it.isNotEmpty()) {
-                binding.fabAdd.setImageDrawable(getDrawable(R.drawable.ic_baseline_favorite_24))
-                binding.fabAdd.setColorFilter(Color.RED)
-                binding.fabAdd.backgroundTintList = ColorStateList.valueOf(Color.WHITE)
-                
+                with(binding.fabAdd) {
+                    setImageDrawable(getDrawable(R.drawable.ic_baseline_favorite_24))
+                    setColorFilter(Color.RED)
+                    backgroundTintList = ColorStateList.valueOf(Color.WHITE)
+
+                    setOnClickListener {
+                        userFavorite.login = user.login
+
+                        detailUserViewModel.deleteFavorite(userFavorite)
+
+                        Toast.makeText(this@DetailUserActivity, "${user.login} dihapus dari favorite", Toast.LENGTH_SHORT).show()
+                    }
+                }
             } else {
-                binding.fabAdd.setOnClickListener {
-                    userFavorite.login = user.login
-                    userFavorite.avatar = user.avatarUrl
-                    userFavorite.type = user.type
+                with(binding.fabAdd) {
+                    setImageDrawable(getDrawable(R.drawable.ic_baseline_favorite_border_24))
+                    setColorFilter(Color.WHITE)
+                    backgroundTintList = ColorStateList.valueOf(Color.RED)
+                    setOnClickListener {
+                        userFavorite.login = user.login
+                        userFavorite.avatar = user.avatarUrl
+                        userFavorite.type = user.type
 
-                    detailUserViewModel.insertFavorite(userFavorite)
+                        detailUserViewModel.insertFavorite(userFavorite)
 
-                    Toast.makeText(this, "Berhasil ditambahkan ke favorite", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@DetailUserActivity, "Berhasil ditambahkan ke favorite", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
 
