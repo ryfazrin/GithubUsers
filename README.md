@@ -6,74 +6,49 @@ Fitur yang harus ada pada aplikasi:
 
 Favorite User dengan Database
 Syarat:
-Aplikasi harus bisa menambah dan menghapus user dari daftar favorite.
-Aplikasi harus mempunyai halaman yang menampilkan daftar favorite.
-Menampilkan halaman detail dari daftar favorite.
+Aplikasi harus bisa menambah dan menghapus user dari daftar favorite. (Selesai, terdapat di halaman Detail User)
+Aplikasi harus mempunyai halaman yang menampilkan daftar favorite. (Selesai)
+Menampilkan halaman detail dari daftar favorite. (Selesai)
 
 Pengaturan Tema
 Syarat:
 Membuat menu untuk mengganti tema (light theme atau dark theme) dengan menggunakan penyimpanan key-value. (Selesai)
 
-Improvisasi :
+## improvisasi Submission akhir
 
-[comment]: <> (Aplikasi sesuai standar.)
+Aplikasi sesuai standar.
 
-[comment]: <> (Kode bersih.)
+Kode bersih.
 
-[comment]: <> (Aplikasi bisa menjaga data ketika orientasi dari potrait ke landscape atau sebaliknya.)
+Terdapat fitur share di Halaman Detail User.
 
-[comment]: <> (Menggunakan library networking Retrofit.)
+Menggunakan library networking Retrofit.
 
-[comment]: <> (Menggunakan RoboPojoGenerator untuk membuat data class response dan di custom.)
+Mengimplementasikan Room untuk menyimpan data ke dalam daftar favorite.
 
-[comment]: <> (Menerapkan Android Architecture Component yaitu ViewModel dan LiveData.)
+Menggunakan DataStore untuk penyimpanan pengaturan tema.
 
-[comment]: <> (Terdapat halaman utama users menggunakan endpoint https://api.github.com/users.)
+Menerapkan Android Architecture Component yaitu ViewModel dan LiveData.
 
-[comment]: <> (Merapikan file kedalam package directory.)
+Menggunakan RoboPojoGenerator untuk membuat data class response dan di custom.
 
-[comment]: <> (Tema warna yang elegan.)
+Aplikasi bisa menjaga data ketika orientasi dari potrait ke landscape atau sebaliknya.
 
-[comment]: <> (Terdapat fitur Refresh di Halaman Utama.)
+Terdapat halaman utama users menggunakan endpoint https://api.github.com/users.
 
-[comment]: <> (terdapat fitur share di Halaman Detail User.)
+Merapikan file kedalam package directory.
 
-[comment]: <> (Yang ingin ditambahkan :)
+Tema warna yang elegan.
 
-[comment]: <> (- merubah sumber data menjadi API)
+Terdapat fitur Refresh di Halaman Utama.
 
-[comment]: <> (- menambahkan fitur pencarian user di halaman utama dan hasil dapat diklik menuju detail user)
+Terdapat indikator loading ketika memuat data.
 
-[comment]: <> (- fragment list follower dan following didalam detail user menggunakan tabLayout)
-
-[comment]: <> (- ada indikator loading ketika memuat data)
-
-## improvisasi Submission
-
-Halaman List User :
-- Gambar Menggunakan plugin Glide
-
-Halaman Detail User :
-- Gambar Menggunakan plugin Glide.
-- Divider didalam Detail User.
-- Divider terlihat di dark Mode.
-- Mengubah Format angka Followers dan Following.
-- Tombol back ke List User.
-- ScrollView didalam Detail User.
-- Tombol Share didalam Detail User.
-
-Mengganti warna primary dan secondary brand pada Theme.
+Meletakan Github Token di dalam Gradle.bundle:app.
 
 ## Color
  color Source : https://coolors.co/038c99-199da1-cefbfa-a82c2c-de0d0d-ffd4d4-000000-ffffff
 
 ## Saran
 
-Terima kasih telah sabar menunggu. Kami membutuhkan waktu untuk bisa memberikan feedback sekomprehensif mungkin kepada setiap peserta kelas. Untuk meningkatkan kualitas project submission yang dikirimkan, kamu dapat menerapkan beberapa saran berikut:
-
-- Jangan lupa untuk memeriksa hasil review kode yang diberikan pada table Submitted App.
-- Mulailah menerapkan View Binding dalam project, agar kode yang dituliskan sesuai dengan best practice yang disarankan.
-- Mulailah untuk menerapkan konsep Material Design ketika mengembangkan proyek Aplikasi. Kamu bisa mengunjungi www.material.io sebagai referensi.
-- Cobalah untuk mengelompokkan Class yang memiliki fungsi dan tanggung jawab yang sama dalam suatu package agar project yang dikembangkan memiliki struktur yang lebih rapih dan akan memudahkan kamu dalam melakukan maintenances kedepannya.
-- Selalu perhatikan resources yang tidak pernah digunakan di dalam project karena akan mempengaruhi size APK nantinya. Kamu bisa memanfaatkan fitur Remove Unused Resource untuk menghapus resources yang tidak pernah digunakan.
-- Agar memastikan project yang kamu buat terhindar dari segala bentuk warning ataupun error, kamu bisa melakukan inspeksi kode dengan mudah melalui Analyze → Inspect Code.
+...
