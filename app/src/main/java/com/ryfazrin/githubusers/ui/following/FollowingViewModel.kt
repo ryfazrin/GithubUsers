@@ -27,7 +27,7 @@ class FollowingViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null) {
-                        _users.value = responseBody
+                        _users.value = responseBody!!
                     }
                 }
             }

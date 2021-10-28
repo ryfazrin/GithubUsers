@@ -8,7 +8,11 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,7 +21,11 @@ import com.ryfazrin.githubusers.Users
 import com.ryfazrin.githubusers.adapter.ListUserAdapter
 import com.ryfazrin.githubusers.databinding.ActivityMainBinding
 import com.ryfazrin.githubusers.ui.detailuser.DetailUserActivity
+import com.ryfazrin.githubusers.ui.favorites.FavoritesActivity
+import com.ryfazrin.githubusers.ui.settings.*
 import kotlin.collections.ArrayList
+
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,6 +37,19 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val pref = SettingsPreferences.getInstance(dataStore)
+        val settingsViewModel = ViewModelProvider(this, SettingsViewModelFactory(pref)).get(
+            SettingsViewModel::class.java
+        )
+
+        settingsViewModel.getThemeSettings().observe(this, { isDarkModeActive: Boolean ->
+            if (isDarkModeActive) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+        })
 
         mainViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(
             MainViewModel::class.java)
@@ -81,6 +102,14 @@ class MainActivity : AppCompatActivity() {
             R.id.refresh -> {
                 mainViewModel.showFirstListUsers()
                 return true
+            }
+            R.id.settings -> {
+                val intent = Intent(this@MainActivity, SettingsActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.favorite_users -> {
+                val intent = Intent(this@MainActivity, FavoritesActivity::class.java)
+                startActivity(intent)
             }
         }
 

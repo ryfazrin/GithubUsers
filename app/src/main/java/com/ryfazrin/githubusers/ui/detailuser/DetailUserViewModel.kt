@@ -1,16 +1,21 @@
 package com.ryfazrin.githubusers.ui.detailuser
 
+import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ryfazrin.githubusers.webapi.ApiConfig
 import com.ryfazrin.githubusers.UserDetailResponse
+import com.ryfazrin.githubusers.database.UserFavorite
+import com.ryfazrin.githubusers.repository.UserFavoriteRepository
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DetailUserViewModel : ViewModel() {
+class DetailUserViewModel(application: Application) : ViewModel() {
+
+    private val mUserFavoriteRepository: UserFavoriteRepository = UserFavoriteRepository(application)
 
     private val _user = MutableLiveData<UserDetailResponse>()
     val user: LiveData<UserDetailResponse> = _user
@@ -30,7 +35,7 @@ class DetailUserViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null) {
-                        _user.value = responseBody
+                        _user.value = responseBody!!
                     }
                 }
             }
@@ -41,6 +46,16 @@ class DetailUserViewModel : ViewModel() {
             }
 
         })
+    }
+
+    fun getUserFavoriteById(login: String): LiveData<List<UserFavorite>> = mUserFavoriteRepository.getUserFavoriteById(login)
+
+    fun insertFavorite(userFavorite: UserFavorite) {
+        mUserFavoriteRepository.insert(userFavorite)
+    }
+
+    fun deleteFavorite(userFavorite: UserFavorite) {
+        mUserFavoriteRepository.delete(userFavorite)
     }
 
     companion object {

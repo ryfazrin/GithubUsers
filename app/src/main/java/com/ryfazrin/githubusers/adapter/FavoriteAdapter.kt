@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.ryfazrin.githubusers.Users
+import com.ryfazrin.githubusers.database.UserFavorite
 import com.ryfazrin.githubusers.databinding.ItemRowUserBinding
 
-class ListUserAdapter(private val listUser: ArrayList<Users>) : RecyclerView.Adapter<ListUserAdapter.ListViewHolder>() {
+class FavoriteAdapter(private val listUser: ArrayList<UserFavorite>) : RecyclerView.Adapter<FavoriteAdapter.ListViewHolder>() {
 
     private lateinit var onItemClickCallback: OnItemCLickCallback
 
@@ -16,10 +16,10 @@ class ListUserAdapter(private val listUser: ArrayList<Users>) : RecyclerView.Ada
     }
 
     inner class ListViewHolder(private val binding: ItemRowUserBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(users: Users) {
+        fun bind(users: UserFavorite) {
             with(binding) {
                 Glide.with(itemView.context)
-                    .load(users.avatarUrl)
+                    .load(users.avatar)
                     .circleCrop()
                     .into(imgItemPhoto)
                 tvItemUsername.text = users.login
@@ -44,6 +44,6 @@ class ListUserAdapter(private val listUser: ArrayList<Users>) : RecyclerView.Ada
     override fun getItemCount(): Int = listUser.size
 
     interface OnItemCLickCallback {
-        fun onItemClicked(data: Users)
+        fun onItemClicked(data: UserFavorite)
     }
 }

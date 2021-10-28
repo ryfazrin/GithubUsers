@@ -29,6 +29,9 @@ data class UserDetailResponse(
 
 	@field:SerializedName("location")
 	val location: String,
+
+	@field:SerializedName("type")
+	val type: String,
 ) : Parcelable
 
 @Parcelize

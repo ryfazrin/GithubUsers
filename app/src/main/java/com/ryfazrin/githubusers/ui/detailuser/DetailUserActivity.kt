@@ -1,11 +1,16 @@
 package com.ryfazrin.githubusers.ui.detailuser
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
@@ -15,7 +20,9 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.ryfazrin.githubusers.R
 import com.ryfazrin.githubusers.adapter.SectionDetailUserPagerAdapter
 import com.ryfazrin.githubusers.UserDetailResponse
+import com.ryfazrin.githubusers.database.UserFavorite
 import com.ryfazrin.githubusers.databinding.ActivityDetailUserBinding
+import com.ryfazrin.githubusers.helper.ViewModelFactory
 import java.text.DecimalFormat
 import kotlin.math.floor
 import kotlin.math.log10
@@ -24,6 +31,7 @@ class DetailUserActivity : AppCompatActivity() {
 
     private lateinit var detailUserViewModel: DetailUserViewModel
     private lateinit var binding: ActivityDetailUserBinding
+    private var userFavorite: UserFavorite = UserFavorite()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +39,7 @@ class DetailUserActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         detailUserViewModel =
-            ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
+            ViewModelProvider(this, ViewModelFactory.getInstance(this.application))
                 .get(DetailUserViewModel::class.java)
 
         val getUser: String = intent.getStringExtra(EXTRA_USER).toString()
@@ -60,7 +68,9 @@ class DetailUserActivity : AppCompatActivity() {
         })
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private fun setUserData(user: UserDetailResponse) {
+
         Glide.with(this)
             .load(user.avatarUrl)
             .into(binding.imgDetailUser)
@@ -70,6 +80,39 @@ class DetailUserActivity : AppCompatActivity() {
         binding.tvDetailLocation.text = user.location
         binding.tvDetailCompany.text = user.company
         binding.tvDetailRepository.text = countViews(user.publicRepos.toLong())
+
+        detailUserViewModel.getUserFavoriteById(user.login).observe(this, {
+            if (it.isNotEmpty()) {
+                with(binding.fabAdd) {
+                    setImageDrawable(getDrawable(R.drawable.ic_baseline_favorite_24))
+                    setColorFilter(Color.RED)
+                    backgroundTintList = ColorStateList.valueOf(Color.WHITE)
+
+                    setOnClickListener {
+                        userFavorite.login = user.login
+
+                        detailUserViewModel.deleteFavorite(userFavorite)
+
+                        Toast.makeText(this@DetailUserActivity, "${user.login} dihapus dari favorite", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } else {
+                with(binding.fabAdd) {
+                    setImageDrawable(getDrawable(R.drawable.ic_baseline_favorite_border_24))
+                    setColorFilter(Color.WHITE)
+                    backgroundTintList = ColorStateList.valueOf(Color.RED)
+                    setOnClickListener {
+                        userFavorite.login = user.login
+                        userFavorite.avatar = user.avatarUrl
+                        userFavorite.type = user.type
+
+                        detailUserViewModel.insertFavorite(userFavorite)
+
+                        Toast.makeText(this@DetailUserActivity, "Berhasil ditambahkan ke favorite", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        })
     }
 
     override fun onSupportNavigateUp(): Boolean {

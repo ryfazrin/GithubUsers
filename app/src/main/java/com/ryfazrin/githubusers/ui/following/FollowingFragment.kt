@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ryfazrin.githubusers.adapter.FollowAdapter
 import com.ryfazrin.githubusers.Users
 import com.ryfazrin.githubusers.databinding.FragmentFollowingBinding
-import com.ryfazrin.githubusers.ui.followers.FollowersFragment
 
 class FollowingFragment : Fragment() {
 
